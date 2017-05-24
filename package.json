@@ -22,5 +22,8 @@
   "devDependencies": {
     "knockout": "^3.4.2",
     "webpack": "^2.6.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4"
   }
 }
