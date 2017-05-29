@@ -2,14 +2,16 @@
   "name": "tonights-move",
   "version": "1.0.0",
   "description": "Map Api Project",
-  "main": "index.js",
+  "main": "server.js",
   "directories": {
     "doc": "doc"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server",
-    "build": "webpack"
+    "build": "webpack",
+    "start": "node server.js",
+    "deploy": "gcloud app deploy"
   },
   "repository": {
     "type": "git",
@@ -22,12 +24,28 @@
   },
   "homepage": "https://github.com/TonyKelly12/Map-API-Project#readme",
   "devDependencies": {
+    "bcryptjs": "*",
+    "body-parser": "*",
+    "connect": "^3.6.2",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "*",
+    "express": "^4.15.3",
+    "express-handlebars": "*",
+    "express-messages": "*",
+    "express-session": "*",
+    "express-validator": "^3.2.0",
     "html-webpack-plugin": "^2.28.0",
     "knockout": "^3.4.2",
+    "lodash": "^4.17.4",
+    "mongodb": "*",
+    "mongoose": "^4.10.3",
+    "passport": "^0.3.2",
+    "passport-http": "*",
+    "passport-local": "^1.0.0",
+    "passport-oauth2": "*",
+    "path": "^0.12.7",
     "webpack": "^2.6.0",
     "webpack-dev-server": "^2.4.5"
   },
-  "dependencies": {
-    "lodash": "^4.17.4"
-  }
+  "dependencies": {}
 }
