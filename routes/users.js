@@ -18,6 +18,9 @@ router.get('/login', function(req, res){
     res.render('login');
 });
 
+
+
+
 // Register User
 router.post('/register', function(req, res){
     var rName = req.body.rName;

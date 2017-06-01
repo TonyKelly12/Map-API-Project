@@ -14,9 +14,10 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/login');
 var db = mongoose.connect;
 
+//File path to routes js files
 var routes = require('./routes/index');
 var users = require('./routes/users');
-
+var maps = require('./routes/maps');
 //Init App
 var app = express();
 
@@ -70,12 +71,14 @@ app.use(function (req, res, next) {
     res.locals.success_msg = req.flash('success_msg');
     res.locals.error_msg = req.flash('error_msg');
     res.locals.error = req.flash('error');
+    res.locals.user = req.user || null;
     next();
 
 });
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/maps', maps);
 
 app.get('/', function (req,res) {
     res.status(200).send('hello it works!');

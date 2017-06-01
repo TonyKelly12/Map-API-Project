@@ -77,3 +77,6 @@ body {
         border-bottom: 0;
     }
 }
+#map{
+ height: 50%;
+}

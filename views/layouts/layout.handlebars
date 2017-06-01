@@ -23,6 +23,11 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="public/js/vendor/modernizr-2.8.3.min.js"></script>
+
+    <!-- google maps api -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYaUhJlde8EY44z5vETFJM0MUokh0bDNA&callback=initMap"
+            async defer></script>
+
 </head>
 <body>
 <div class="container">
@@ -35,7 +40,7 @@
                 {{else}}
                     <li role="presentation"><a href="/users/login">Login</a></li>
                     <li role="presentation"><a href="/users/register">Register</a></li>
-                {{/if}}<a href="/users/register">Sign up</a></li>
+                {{/if}}
             </ul>
         </nav>
         <h3 class="text-muted">Login</h3>
@@ -65,6 +70,7 @@
 
     </div>
     </div>
+
 </body>
 
 <footer class="footer">
