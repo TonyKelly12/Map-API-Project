@@ -21,6 +21,9 @@ var maps = require('./routes/maps');
 //Init App
 var app = express();
 
+//block header from containing information about server
+app.disable('x-powered-by');
+
 //VIew Engine
 app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars', exphbs({defaultLayout: 'layout'}));
