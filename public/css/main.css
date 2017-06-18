@@ -2,8 +2,8 @@
 body {
     padding-top: 20px;
     padding-bottom: 20px;
-    background-repeat: no-repeat;
-    background-size: 100% 120%;
+    background-repeat: space;
+    background-size: 100% 100%;
 
 }
 
@@ -73,7 +73,61 @@ body {
     color: white;
 }
 
-.expressContent{
+.left{
+    height: 100%;
+    margin-left: 10%;
+    padding-right: .5%;
+    margin-right: 10%;
+
+}
+
+.center{
+    height: 100%;
+    margin-left: 60%;
+
+}
+
+.right{
+    height: 100%;
+    margin-left: 75%;
+}
+
+
+.image1{
+    max-height: 100%;
+    max-width: 100%;
 
 
 }
+
+.image2{
+    max-height: 100%;
+    max-width: 100%;
+
+
+}
+
+.image3{
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.image4{
+    max-height: 100%;
+    max-width: 100%;
+
+}
+
+.image5{
+    max-height: 100%;
+    max-width: 100%;
+
+}
+.image6{
+    max-height: 100%;
+    max-width: 100%;
+
+}
+/* Index irregular grid */
+
+
