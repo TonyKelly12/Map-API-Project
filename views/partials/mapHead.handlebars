@@ -1,0 +1,114 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
+
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYaUhJlde8EY44z5vETFJM0MUokh0bDNA&libraries=geometry&callback=initMap" async defer>
+</script>
+<!-- google maps api-->
+<script type="text/javascript">
+var markers=[];
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 37.757172, lng: -87.117398},
+            zoom: 14
+        });
+        //MAking Moonlte marker
+        var locations =[
+            {title: 'Moonlite', location:  {lat:37.757365, lng:-87.148764}},
+            {title: 'BurgerKing', location: {lat:37.756154, lng:-87.150722}},
+            {title: 'Arbys', location:{lat:37.756222, lng:-87.151334}},
+            {title: 'Little Caesars', location:{lat:37.755247, lng:-87.151795}},
+            {title: 'Big Dipper', location:{lat:37.757003, lng:-87.148246}}
+        ];
+
+        //making info window for marker
+        var largeInfowindow = new google.maps.InfoWindow();
+
+        //the folloeing group uses the location array to create an array of markers on the init
+
+        for (var i =0; i<locations.length; i++){
+            //Get the position from the location array
+            var position = locations[i].location;
+            var title = locations[i].title;
+            //create the marker per location and put into markers array
+            var marker = new google.maps.Marker({
+                position: position,
+                title: title,
+                animation: google.maps.Animation.DROP,
+                id: i
+            });
+            //push the marker to array of markers
+            markers.push(marker);
+            // Extend the boundaries of the map for each marker
+
+            //Create an onclick event to open an info window at each marker
+            marker.addListener('click', function () {
+                populateInfoWindow(this, largeInfowindow);
+        });
+        }
+
+
+        document.getElementById('show-listings').addEventListener('click', showListings);
+        document.getElementById('hide-listings').addEventListener('click', hideListings);
+        //this function populates the info window when marker is clicked based on position of marker
+        function populateInfoWindow(marker, infowindow) {
+            //check to make sure infowindow is not  already opened
+            if(infowindow.marker != marker){
+                infowindow.marker = marker;
+                infowindow.setContent('<div>' + marker.title + '<div>');
+                infowindow.open(map, marker);
+                //Make sure the marker property is cleared if  infowindow is closed
+                infowindow.addListener('closeclick', function () {
+                    infowindow.setMarker(null);
+                });
+                var streetViewService = new google.maps.StreetViewService();
+                var radius = 50;
+
+                /*  If the status is ok and pano is found, compute the position of the streetview image,
+                  * then calculate the heading, then get a pano from that and set the options */
+
+                function getStreetView(data, status) {
+                    if (status == google.maps.StreetViewStatus.OK) {
+                        var nearStreetViewLocation = data.location.latLng;
+                        var heading = google.maps.geometry.spherical.computeHeading(
+                            nearStreetViewLocation, marker.position);
+                        infowindow.setContent('<div>' + marker.title + '</div><div id ="pano"></div>');
+                        var panoramaOptions = {
+                            position: nearStreetViewLocation,
+                            pov: {
+                                heading: heading,
+                                pitch: 30
+                            }
+                        };
+                        var panorama = new google.maps.SreetViewPanorama(
+                            document.getElementById('pano'), panoramaOptions);
+                    }else{
+                        infowindow.setContent('<div>' + marker.title + '</div>' + '<div>No Street View Found</div>');
+                    }
+                }
+                /*  USe StreetVIew service to get the closest streetvie image within 50 meters of markers position  */
+                streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
+
+                infowindow.open(map, marker);
+
+            }
+        }
+        function showListings() {
+            var bounds = new google.maps.LatLngBounds();
+            for(var i = 0; i < markers.length; i++){
+                markers[i].setMap(map);
+                bounds.extend(markers[i].position);
+            }
+            map.fitBounds(bounds);
+        }
+
+        function hideListings() {
+            for (var i = 0; i<markers.length; i++){
+                markers[i].setMap(null);
+            }
+        }
+
+    }
+</script>
+

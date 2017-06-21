@@ -2,17 +2,25 @@
 <head>
 
     <title>Maps</title>
-
+    {{>mapHead}}
 </head>
 
 <body>
+
 <h2 class="page-header">Maps</h2>
 <p>Welcome to your map</p>
-
-
-<div  id="map"></div>
-
-
+    <div class="container-fluid">
+        <div class="row">
+            <div class="options-box col-md-2">
+                <h1>Find Somewhere To Eat</h1>
+                <div class="mapButtons">
+                    <input type="button" id="show-listings" value="ShowListings">
+                    <input type="button" id="hide-listings" value="HideListings">
+                </div>
+            </div>
+            <div  id="map"></div>
+        </div>
+    </div>
 </body>
 
 

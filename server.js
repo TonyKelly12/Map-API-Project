@@ -8,6 +8,7 @@ var flash = require('connect-flash');
 var session = require('express-session');
 var passport = require('passport');
 var localStrategy = require('passport-local').Strategy;
+var formi = require('formidable');
 var mongo = require('mongodb');
 var knockout = require('knockout');
 var mongoose = require('mongoose');
