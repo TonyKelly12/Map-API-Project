@@ -16,7 +16,7 @@ var markers=[];
         //MAking Moonlte marker
         var locations =[
             {title: 'Moonlite', location:  {lat:37.757365, lng:-87.148764}},
-            {title: 'BurgerKing', location: {lat:37.756154, lng:-87.150722}},
+            {title: 'BurgerKing', location: {lat:37.756132, lng:-87.150787}},
             {title: 'Arbys', location:{lat:37.756222, lng:-87.151334}},
             {title: 'Little Caesars', location:{lat:37.755247, lng:-87.151795}},
             {title: 'Big Dipper', location:{lat:37.757003, lng:-87.148246}}
@@ -55,12 +55,11 @@ var markers=[];
         function populateInfoWindow(marker, infowindow) {
             //check to make sure infowindow is not  already opened
             if(infowindow.marker != marker){
+                infowindow.setContent('');
                 infowindow.marker = marker;
-                infowindow.setContent('<div>' + marker.title + '<div>');
-                infowindow.open(map, marker);
                 //Make sure the marker property is cleared if  infowindow is closed
                 infowindow.addListener('closeclick', function () {
-                    infowindow.setMarker(null);
+                    infowindow.marker(null);
                 });
                 var streetViewService = new google.maps.StreetViewService();
                 var radius = 50;
@@ -73,7 +72,7 @@ var markers=[];
                         var nearStreetViewLocation = data.location.latLng;
                         var heading = google.maps.geometry.spherical.computeHeading(
                             nearStreetViewLocation, marker.position);
-                        infowindow.setContent('<div>' + marker.title + '</div><div id ="pano"></div>');
+                        infowindow.setContent('<div>' + marker.title + '</div><div id="pano"></div>');
                         var panoramaOptions = {
                             position: nearStreetViewLocation,
                             pov: {
@@ -86,10 +85,12 @@ var markers=[];
                     }else{
                         infowindow.setContent('<div>' + marker.title + '</div>' + '<div>No Street View Found</div>');
                     }
+
+
+
                 }
                 /*  USe StreetVIew service to get the closest streetvie image within 50 meters of markers position  */
                 streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
-
                 infowindow.open(map, marker);
 
             }
