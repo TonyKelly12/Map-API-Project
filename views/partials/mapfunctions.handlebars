@@ -1,0 +1,375 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
+
+
+<script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASBPr5sRT2E6DcIpLZmtNwFm0S4A0RCkk&libraries=places,drawing,geometry&callback=initMap"
+        async defer>
+</script>
+
+<!-- google maps api-->
+<script type="text/javascript">
+    var map;
+    var favmarkers = [];
+    var searchmarkers = [];
+    var polygon = null;
+    var largeInfowindow;
+    var service;
+
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 38.252259, lng: -85.756534},
+            zoom: 14
+        });
+        //use locations array as the users saved favorite places
+        var locations = [
+            {title: 'KFC Yum Center', location: {lat: 38.257340, lng: -85.754245}},
+            {title: 'The Old Spaghetti Factory', location: {lat: 38.255317, lng: -85.754910}},
+            {title: 'Spinellis Pizza', location: {lat: 38.255317, lng: -85.754910}},
+            {title: 'Hard Rock Cafe', location: {lat: 38.252169, lng: -85.757583}},
+            {title: 'Smashburger', location: {lat: 38.255317, lng: -85.754910}}
+        ];
+
+//making info window for marker
+        largeInfowindow = new google.maps.InfoWindow();
+        service = new google.maps.places.PlacesService(map);
+
+        //init Drawing Manager
+        var drawingManger = new google.maps.drawing.DrawingManager({
+            drawingMode: google.maps.drawing.OverlayType.POLYGON,
+            drawingControl: true,
+            drawingControlOptions: {
+                position: google.maps.ControlPosition.TOP_LEFT,
+                drawingModes: [
+                    google.maps.drawing.OverlayType.POLYGON
+                ]
+            }
+        });
+
+//the following group uses the location array to create an array of markers on the init
+
+        for (var i = 0; i < locations.length; i++) {
+            //Get the position from the location array
+            var position = locations[i].location;
+            var title = locations[i].title;
+            //create the marker per location and put into markers array
+            var marker = new google.maps.Marker({
+                position: position,
+                title: title,
+                animation: google.maps.Animation.DROP,
+                id: i
+            });
+            //push the marker to array of markers
+            favmarkers.push(marker);
+            // Extend the boundaries of the map for each marker
+
+            //Create an onclick event to open an info window at each marker
+            marker.addListener('click', function () {
+                populateInfoWindow(this, largeInfowindow);
+            });
+        }
+
+        //hide and show listings event listeners
+        document.getElementById('show-listings').addEventListener('click', showListings);
+        document.getElementById('hide-listings').addEventListener('click', hideListings);
+        //drawing manager event listener
+        document.getElementById('toggle-drawing').addEventListener('click', function () {
+            toggleDrawing(drawingManger);
+        });
+        //Zoom to area event listener
+        document.getElementById('zoom-to-area').addEventListener('click', function () {
+            zoomToArea();
+        });
+
+        document.getElementById('search-within-time').addEventListener('click', function () {
+            searchWithinTime();
+        });
+
+        document.getElementById('place-search').addEventListener('click', function () {
+            placeSearch();
+        });
+
+        document.getElementById('clear-search').addEventListener('click', function () {
+            hideSearchMarker();
+        });
+
+        //Polygon Event Listener
+        drawingManger.addListener('overlaycomplete', function (event) {
+
+            if (polygon) {
+                polygon.setMap(null);
+                hideListings();
+            }
+            //switching the drawing mode to hand
+            drawingManger.setDrawingMode(null);
+            //creating a new editable polygon for overlay
+            polygon = event.overlay;
+            polygon.setEditable(true);
+            //searching within the polygon
+            searchWithinPolygon();
+            //Make sure the search is re-done if polygone changes.
+            polygon.getPath().addListener('set_at', searchWithinPolygon);
+            polygon.getPath().addListener('insert_at', searchWithinPolygon);
+        });
+
+//this function populates the info window when marker is clicked based on position of marker
+        function populateInfoWindow(marker, infowindow) {
+            //check to make sure infowindow is not  already opened
+            if (infowindow.marker != marker) {
+                infowindow.setContent('');
+                infowindow.marker = marker;
+                //Make sure the marker property is cleared if  infowindow is closed
+                infowindow.addListener('closeclick', function () {
+                    infowindow.marker(null);
+                });
+                var streetViewService = new google.maps.StreetViewService();
+                var radius = 50;
+
+                /*  If the status is ok and pano is found, compute the position of the streetview image,
+                 * then calculate the heading, then get a pano from that and set the options */
+
+                function getStreetView(data, status) {
+                    if (status == google.maps.StreetViewStatus.OK) {
+                        var nearStreetViewLocation = data.location.latLng;
+                        var heading = google.maps.geometry.spherical.computeHeading(
+                            nearStreetViewLocation, marker.position);
+                        infowindow.setContent('<div>' + marker.title + '</div><div id="pano"></div>');
+                        var panoramaOptions = {
+                            position: nearStreetViewLocation,
+                            pov: {
+                                heading: heading,
+                                pitch: 30
+                            }
+                        };
+                        var panorama = new google.maps.StreetViewPanorama(
+                            document.getElementById('pano'), panoramaOptions);
+                    } else {
+                        infowindow.setContent('<div>' + marker.title + '</div>' + '<div>No Street View Found</div>');
+                    }
+                }
+
+                /*  USe StreetVIew service to get the closest streetvie image within 50 meters of markers position  */
+                streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
+                infowindow.open(map, marker);
+
+            }
+        }
+
+        function showListings() {
+            var bounds = new google.maps.LatLngBounds();
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+                bounds.extend(markers[i].position);
+            }
+            map.fitBounds(bounds);
+        }
+
+        function hideListings() {
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(null);
+            }
+        }
+
+        function toggleDrawing(drawingManager) {
+            if (drawingManager.map) {
+                drawingManager.setMap(null);
+                //In case the user drew anythin, get rid of the polygon
+                if (polygon) {
+                    polygon.setMap(null);
+                }
+            } else {
+                drawingManager.setMap(map);
+            }
+        }
+
+        function searchWithinPolygon() {
+            for (var i = 0; i < markers.length; i++) {
+                if (google.maps.geometry.poly.containsLocation(markers[i].position, polygon)) {
+                    markers[i].setMap(map);
+                } else {
+                    markers[i].setMap(null);
+                }
+            }
+        }
+
+        function zoomToArea() {
+            //Init Geocoder
+            var geocoder = new google.maps.Geocoder();
+            //Ger the address or place that the user entered
+            var address = document.getElementById('zoom-to-area-text').value;
+            //Make sure the address isn't blank
+            if (address == '') {
+                window.alert('You must enter an area, or address.');
+            } else {
+                //Geocode the address/area entered to the center. Then, center the map on it
+                geocoder.geocode(
+                    {
+                        address: address,
+                        componentRestrictions: {locality: 'Louisville'}
+                    },
+                    function (results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            map.setCenter(results[0].geometry.location);
+                            map.setZoom(15);
+                        } else {
+                            window.alert('We could not find that location - try entering more specific place.');
+                        }
+                    }
+                )
+            }
+
+        }
+
+        function searchWithinTime() {
+            //Init the distance Matrix service.
+            var distanceMatrixService = new google.maps.DistanceMatrixService;
+            var address = document.getElementById('search-within-time-text').value;
+            //check to make sure the place isnt blank.
+            if (address == '') {
+                window.alert('You must enter an address.');
+            } else {
+                hideListings();
+                /*Use distance matrix service to calculate duration of routes between all markers  and the destination
+                * address entered by the user. Then put all the origins into an origin matrix*/
+                var origins = [];
+                for (var i = 0; i < markers.length; i++) {
+                    origins[i] = markers[i].position;
+                }
+                var destination = address;
+                var mode = document.getElementById('mode').value;
+                //Now that both origins and destination are defined, get all info for the distance between
+                distanceMatrixService.getDistanceMatrix({
+                    origins: origins,
+                    destinations: [destination],
+                    travelMode: google.maps.TravelMode[mode],
+                    unitSystem: google.maps.UnitSystem.IMPERIAL,
+
+                }, function (response, status) {
+                    if (status !== google.maps.DistanceMatrixStatus.OK) {
+                        window.alert('Error was: ' + status);
+                    } else {
+                        displayMarkersWithinTime(response);
+                    }
+                })
+            }
+        }
+
+        function displayMarkersWithinTime(response) {
+            var maxDuration = document.getElementById('max-duration').value;
+            var origins = response.originAddresses;
+            var destinations = response.destinationAddresses;
+            /* Parse through the results, and get the distance and duration of each because there might be multiple
+             * origins and destinations we have a nested loop then make sure at least 1 result was found */
+            var atLeastOne = false;
+            for (var i = 0; i < origins.length; i++) {
+                var results = response.rows[i].elements;
+                for (var j = 0; j < results.length; j++) {
+                    var element = results[i];
+                    if (element.status === "OK") {
+                        /* the distance is returned in feet, but the text is in miles. If we wanted to switch the
+                         * function to show markers within a user-entered Distance, We would need the value for
+                          * the distance, but for now we only need the text. */
+                        var distanceText = element.distance.text;
+                        /* Duration value is given in seconds so we make it in Minutes. We need both the value and
+                         * the text. */
+                        var duration = element.duration.value / 60;
+                        var durationText = element.duration.text;
+                        if (duration <= maxDuration) {
+                            /* the origin[i] should = the markers[i] */
+                            markers[i].setMap(map);
+                            atLeastOne = true;
+                            /* Create a mini info window to open immediately nd contain the distance and duration */
+                            var infowindow = new google.maps.InfoWindow({
+                                content: durationText + ' away, ' + distanceText +
+                                '<div><input type=\"button\" value=\"View Route\" onclick =' +
+                                '\"displayDirections(&quot;' + origins[i] + '&quot;);\"></input></div>'
+                            });
+                            infowindow.open(map, markers[i]);
+                            /* put this in so that this small window closes if the user clicks the marker,
+                             * when the big infowindow opens */
+                            markers[i].infowindow = infowindow;
+                            google.maps.event.addListener(markers[i], 'click', function () {
+                                this.infowindow.close();
+                            });
+                        }
+                    }
+                }
+            }
+
+
+            function displayDirections(origin) {
+                hideListings();
+                var directionsService = new google.maps.DirectionsService;
+                /* get the destination address from the user entered value. */
+                var destinationAddress =
+                    document.getElementById('search-within-time-text').value;
+                //Get mode again from the user entered Value.
+                var mode = document.getElementById('mode').value;
+                directionsService.route({
+                    //The origin is the passed in markers position.
+                    origin: origin,
+                    //The destination is user entered address
+                    destination: destinationAddress,
+                    travelMode: google.maps.TravelMode[mode]
+                }, function (response, status) {
+                    if (status === google.maps.DirectionsSstatus.OK) {
+                        var directionsDisplay = new google.maps.DirectionsRenderer({
+                            map: map,
+                            directions: response,
+                            draggable: true,
+                            polylineOptions: {
+                                strokeColor: 'green'
+                            }
+                        });
+                    } else {
+                        window.alert('Directions request failed due to ' + status);
+                    }
+                });
+            }
+        }
+
+
+        //this function takes users input for type  of place and displays all within 5000 radius.
+        function placeSearch() {
+
+            largeInfowindow = new google.maps.InfoWindow();
+            service = new google.maps.places.PlacesService(map);
+            service.nearbySearch({
+                location: map.center,
+                radius: 5000,
+                type: document.getElementById('place-search-text').value
+            }, callback);
+        }
+
+        function callback(results, status) {
+
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+                for (var i = 0; i < results.length; i++) {
+                    createMarker(results[i]);
+                }
+            }
+        }
+        var searchMarker;
+        function createMarker(place) {
+
+            searchMarker = new google.maps.Marker({
+                map: map,
+                position: place.geometry.location
+            });
+
+            google.maps.event.addListener(searchMarker, 'click', function() {
+                largeInfowindow.setContent(place.name);
+                largeInfowindow.open(map, this);
+            });
+            searchmarkers.push(searchMarker);
+        }
+        function hideSearchMarker() {
+            for (var i = 0; i < searchmarkers.length; i++) {
+                searchmarkers[i].setMap(null);
+            }
+        }
+    }
+
+</script>
+

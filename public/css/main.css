@@ -70,6 +70,25 @@ body {
     color: white;
 }
 
+#toggle-drawing{
+    width: 27%;
+    position: relative;
+    margin-left: 10px;
+}
+
+#zoom-to-area-text{
+    position: relative;
+    width: 70%;
+}
+
+#zoom-to-area{
+    width: 24%;
+}
+
+#search-within-time-text{
+    width: 84%;
+}
+
 .index-grid{
 
 }

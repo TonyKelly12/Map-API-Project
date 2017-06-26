@@ -2,7 +2,7 @@
 <head>
 
     <title>Maps</title>
-    {{>mapHead}}
+    {{>mapfunctions}}
 </head>
 
 <body>
@@ -12,10 +12,45 @@
     <div class="container-fluid">
         <div class="row">
             <div class="options-box col-md-2">
-                <h1>Find Somewhere To Eat</h1>
+                <h1>Your Map Options</h1>
                 <div class="mapButtons">
                     <input type="button" id="show-listings" value="ShowListings">
                     <input type="button" id="hide-listings" value="HideListings">
+
+                    <span class="text"> Draw a shape to search within it</span>
+                    <input id="toggle-drawing" type="button" value="Drawing Tools">
+                </div>
+                <hr>
+                <div>
+                    <h4>Zoom to your favorite area</h4>
+                    <input type="text" id="zoom-to-area-text" placeholder="Enter your favorite area!">
+                    <input type="button" id="zoom-to-area" value="Zoom">
+                </div>
+                <hr>
+                <div>
+                    <h4>Search For Places</h4>
+                    <input type="text" id="place-search-text" placeholder="What type of Place are you looking for">
+                    <input type="button" id="place-search" value="Search">
+                    <input type="button" id="clear-search" value="Clear Search">
+                </div>
+                <hr>
+                <div>
+                    <span class="text">Within</span>
+                    <select id="max-duration">
+                        <option value="10">10 Min</option>
+                        <option value="15">15 Min</option>
+                        <option value="30">30 Min</option>
+                        <option value="60">60 Min</option>
+                    </select>
+                    <select id="mode">
+                        <option value="DRIVING">Drive Min</option>
+                        <option value="WALKING">Walk</option>
+                        <option value="BICYCLING">Bicycling</option>
+                        <option value="TRANSIT">Transit</option>
+                    </select>
+                    <span class="text">of</span>
+                    <input type="text" id="search-within-time-text" placeholder="Ex: Google office or 75 9th St">
+                    <input type="button" id="search-within-time" value="Go">
                 </div>
             </div>
             <div  id="map"></div>
