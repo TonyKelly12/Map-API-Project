@@ -12,6 +12,7 @@
 <script type="text/javascript">
     var map;
     var favmarkers = [];
+    var markers =[];
     var searchmarkers = [];
     var polygon = null;
     var largeInfowindow;
@@ -233,8 +234,8 @@
                 /*Use distance matrix service to calculate duration of routes between all markers  and the destination
                 * address entered by the user. Then put all the origins into an origin matrix*/
                 var origins = [];
-                for (var i = 0; i < markers.length; i++) {
-                    origins[i] = markers[i].position;
+                for (var i = 0; i < searchmarkers.length; i++) {
+                    origins[i] = searchmarkers[i].position;
                 }
                 var destination = address;
                 var mode = document.getElementById('mode').value;
@@ -277,20 +278,20 @@
                         var durationText = element.duration.text;
                         if (duration <= maxDuration) {
                             /* the origin[i] should = the markers[i] */
-                            markers[i].setMap(map);
+                            searchmarkers[i].setMap(map);
                             atLeastOne = true;
                             /* Create a mini info window to open immediately nd contain the distance and duration */
-                            var infowindow = new google.maps.InfoWindow({
+                            var largeInfowindow = new google.maps.InfoWindow({
                                 content: durationText + ' away, ' + distanceText +
                                 '<div><input type=\"button\" value=\"View Route\" onclick =' +
                                 '\"displayDirections(&quot;' + origins[i] + '&quot;);\"></input></div>'
                             });
-                            infowindow.open(map, markers[i]);
+                            largeInfowindow.open(map, searchmarkers[i]);
                             /* put this in so that this small window closes if the user clicks the marker,
                              * when the big infowindow opens */
-                            markers[i].infowindow = infowindow;
-                            google.maps.event.addListener(markers[i], 'click', function () {
-                                this.infowindow.close();
+                            searchmarkers[i].largeInfowindow = largeInfowindow;
+                            google.maps.event.addListener(searchmarkers[i], 'click', function () {
+                                this.largeInfowindow.close();
                             });
                         }
                     }
