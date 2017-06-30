@@ -17,6 +17,7 @@
     var polygon = null;
     var largeInfowindow;
     var service;
+    var louisville = {lat: 38.252259, lng: -85.756534};
 
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
@@ -159,16 +160,23 @@
 
         function showListings() {
             var bounds = new google.maps.LatLngBounds();
-            for (var i = 0; i < markers.length; i++) {
-                markers[i].setMap(map);
-                bounds.extend(markers[i].position);
+            for (var i = 0; i < favmarkers.length; i++) {
+                favmarkers[i].setMap(map);
+                bounds.extend(favmarkers[i].position);
             }
             map.fitBounds(bounds);
         }
 
         function hideListings() {
-            for (var i = 0; i < markers.length; i++) {
-                markers[i].setMap(null);
+            for (var i = 0; i < favmarkers.length; i++) {
+                favmarkers[i].setMap(null);
+                zoomHome();
+            }
+        }
+
+        function hideOnly() {
+            for (var i = 0; i < favmarkers.length; i++) {
+                favmarkers[i].setMap(null);
             }
         }
 
@@ -193,7 +201,7 @@
                 }
             }
         }
-
+        var zoomplace;
         function zoomToArea() {
             //Init Geocoder
             var geocoder = new google.maps.Geocoder();
@@ -213,6 +221,7 @@
                         if (status == google.maps.GeocoderStatus.OK) {
                             map.setCenter(results[0].geometry.location);
                             map.setZoom(15);
+                            zoomplace = results[0].geometry.location;
                         } else {
                             window.alert('We could not find that location - try entering more specific place.');
                         }
@@ -220,6 +229,11 @@
                 )
             }
 
+        }
+
+        function zoomHome() {
+            map.setCenter(louisville);
+            map.setZoom(14);
         }
 
         function searchWithinTime() {
@@ -230,19 +244,21 @@
             if (address == '') {
                 window.alert('You must enter an address.');
             } else {
-                hideListings();
+                hideOnly();
                 /*Use distance matrix service to calculate duration of routes between all markers  and the destination
                 * address entered by the user. Then put all the origins into an origin matrix*/
-                var origins = [];
+                var destinations = [];
                 for (var i = 0; i < searchmarkers.length; i++) {
-                    origins[i] = searchmarkers[i].position;
+                    //console.log(searchmarkers[i].position);
+                    destinations[i] = searchmarkers[i].position;
+                    //console.log(destinations[i]);
                 }
-                var destination = address;
+                var origin = address;
                 var mode = document.getElementById('mode').value;
                 //Now that both origins and destination are defined, get all info for the distance between
                 distanceMatrixService.getDistanceMatrix({
-                    origins: origins,
-                    destinations: [destination],
+                    origins: [origin],
+                    destinations: [destinations],
                     travelMode: google.maps.TravelMode[mode],
                     unitSystem: google.maps.UnitSystem.IMPERIAL,
 
@@ -331,18 +347,31 @@
         }
 
 
-        //this function takes users input for type  of place and displays all within 5000 radius.
+        /*this function takes users input for type  of place and displays all within 5000 radius. If the user
+         * has already zoomed in to a area the search will be conducted within that area if not search will be
+          * conducted within the maps init location*/
         function placeSearch() {
-
+            var placeQuery = document.getElementById('place-search-text').value;
             largeInfowindow = new google.maps.InfoWindow();
             service = new google.maps.places.PlacesService(map);
-            service.nearbySearch({
-                location: map.center,
-                radius: 5000,
-                type: document.getElementById('place-search-text').value
-            }, callback);
-        }
+                if (zoomplace != null){
+                    service.nearbySearch({
+                        location: zoomplace,
+                        radius: 1000,
+                        type: placeQuery
 
+                    }, callback);
+                } else {
+                    service.nearbySearch({
+                        location: map.center,
+                        radius: 1000,
+                        type: placeQuery
+
+                    }, callback);
+
+                }
+        }
+        // THis Function parses results from placeSearch() and calls the createMarker() function for each.
         function callback(results, status) {
 
             if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -351,6 +380,7 @@
                 }
             }
         }
+        // THis Function creates a marker for each result that comes back in placeSearch() and places on map
         var searchMarker;
         function createMarker(place) {
 
@@ -358,16 +388,20 @@
                 map: map,
                 position: place.geometry.location
             });
-
+            console.log(searchMarker.position);
             google.maps.event.addListener(searchMarker, 'click', function() {
                 largeInfowindow.setContent(place.name);
                 largeInfowindow.open(map, this);
             });
             searchmarkers.push(searchMarker);
         }
+
+        //This function hides all markers from place search only and refocuses map to init position
         function hideSearchMarker() {
             for (var i = 0; i < searchmarkers.length; i++) {
                 searchmarkers[i].setMap(null);
+                zoomplace = null;
+                zoomHome();
             }
         }
     }

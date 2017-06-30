@@ -7,6 +7,10 @@ body {
 
 }
 
+img{
+    max-width: 100%;
+    max-height: 100%;
+}
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 
@@ -91,75 +95,75 @@ body {
 
 .index-grid{
 
+
 }
 
 .left{
-    height: 100%;
-    max-width: 30vw;
-    float: left;
+
+    max-width: 100%;
+    max-height: 100%;
 
 
 }
 
 .center{
-    height: 100%;
 
+    max-width: 100%;
+    max-height: 100%;
 
 
 }
 
 .right{
-    height: 100%;
+    max-height: 100%;
+    max-width: 100%;
 
-    float: right;
+
 
 }
 
 
 .image1{
-    max-height: 100%;
-    max-width: 25vw;
+
     margin-right: 1%;
-    padding: 5px;
+    padding: 3px;
 
 
 
 }
 
 .image2{
-    max-height: 100%;
-    max-width: 25vw;
-    padding: 5px;
+    padding: 3px;
+
+
 
 }
 
 .image3{
-    max-height: 100%;
-    max-width: 25vw;
-    padding: 5px;
+    padding: 3px;
+
 
 }
 
 .image4{
-    max-height: 100%;
-    max-width: 25vw;
-    padding: 5px;
-    float: left;
+
+    padding: 3px;
+
+
 
 }
 
 .image5{
-    max-height: 100%;
-    max-width: 25vw;
-    padding: 5px;
-    float: left;
+    padding-top: 3px;
+
+
+
 
 }
 .image6{
-    max-height: 100%;
-    max-width: 25vw;
-    padding: 5px;
-    float: right;
+
+    padding-top: 3px;
+
 
 }
 /* Index irregular grid */
