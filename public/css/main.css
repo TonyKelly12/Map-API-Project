@@ -94,7 +94,7 @@ img{
 }
 
 .index-grid{
-
+position: static;
 
 }
 
@@ -102,7 +102,7 @@ img{
 
     max-width: 100%;
     max-height: 100%;
-
+    position: static;
 
 }
 
@@ -110,60 +110,59 @@ img{
 
     max-width: 100%;
     max-height: 100%;
-
+    position: static;
 
 }
 
 .right{
     max-height: 100%;
     max-width: 100%;
-
+    position: static;
 
 
 }
 
 
 .image1{
+    padding:1px;
+    position: static;
 
-    margin-right: 1%;
-    padding: 3px;
 
 
 
 }
 
 .image2{
-    padding: 3px;
+    position: static;
 
 
 
 }
 
 .image3{
-    padding: 3px;
-
+    padding:1px;
+    position: static;
 
 }
 
 .image4{
+    position: static;
 
-    padding: 3px;
 
 
 
 }
 
 .image5{
-    padding-top: 3px;
-
-
+    right: 2.7%;
+    padding-left:1px;
+    position: static;
 
 
 }
 .image6{
-
-    padding-top: 3px;
-
+    right:9.8%;
+    position: static;
 
 }
 /* Index irregular grid */

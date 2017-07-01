@@ -279,7 +279,7 @@
             /* Parse through the results, and get the distance and duration of each because there might be multiple
              * origins and destinations we have a nested loop then make sure at least 1 result was found */
             var atLeastOne = false;
-            for (var i = 0; i < origins.length; i++) {
+            for (var i = 0; i < destinations.length; i++) {
                 var results = response.rows[i].elements;
                 for (var j = 0; j < results.length; j++) {
                     var element = results[i];
@@ -300,7 +300,7 @@
                             var largeInfowindow = new google.maps.InfoWindow({
                                 content: durationText + ' away, ' + distanceText +
                                 '<div><input type=\"button\" value=\"View Route\" onclick =' +
-                                '\"displayDirections(&quot;' + origins[i] + '&quot;);\"></input></div>'
+                                '\"displayDirections(&quot;' + destinations[i] + '&quot;);\"></input></div>'
                             });
                             largeInfowindow.open(map, searchmarkers[i]);
                             /* put this in so that this small window closes if the user clicks the marker,
@@ -387,6 +387,7 @@
             searchMarker = new google.maps.Marker({
                 map: map,
                 position: place.geometry.location
+
             });
             console.log(searchMarker.position);
             google.maps.event.addListener(searchMarker, 'click', function() {
