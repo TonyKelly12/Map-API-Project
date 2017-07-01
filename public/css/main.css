@@ -1,10 +1,20 @@
 /* Space out content a bit */
 body {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    background-repeat: space;
-    background-size: 100% 100%;
+    background-size: 100% ;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(to right, purple 0%, black 110%), url('w3css.gif');
+   
+    
+}
 
+#bootstrap-overrides{
+    color: white;
+}
+.page-header{
+    color: white;
+}
+#subtitle{
+    color: white;
 }
 
 img{
@@ -12,32 +22,7 @@ img{
     max-height: 100%;
 }
 /* Everything but the jumbotron gets side spacing for mobile first views */
-.header,
 
-.footer {
-    padding-right: 15px;
-    padding-left: 15px;
-}
-
-/* Custom page header */
-.header {
-    padding-bottom: 20px;
-    border-bottom: 1px solid #e5e5e5;
-}
-/* Make the masthead heading the same height as the navigation */
-.header h3 {
-    margin-top: 0;
-    margin-bottom: 0;
-    line-height: 40px;
-}
-
-/* Custom page footer */
-.footer {
-    position: relative;
-    padding-top: 19px;
-    color: #777;
-    border-top: 1px solid #e5e5e5;
-}
 
 /* Customize container */
 
@@ -61,12 +46,12 @@ img{
         border-bottom: 0;
     }
 #map{
-
+    border: 2.5px solid black;
     height:100%;
-    width:  75%;
+    width:  80vw;
     position: absolute;
     right: 0px;
-    left: 362px;
+    left: 225px;
 
 }
 
