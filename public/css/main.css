@@ -1,17 +1,29 @@
 /* Space out content a bit */
-body {
-    background-size: 100% ;
+.navbar{
+    width: 100vw;
+}
+
+.expressContent{
+    height: 100vh;
+    width: 100vw;
+}
+
+
+#bootstrap-overrides {
+    background-size: 100vw 100% ;
     background-repeat: no-repeat;
     background-image: linear-gradient(to right, purple 0%, black 110%), url('w3css.gif');
    
     
 }
 
-#bootstrap-overrides{
+#bootstrap-overrides h1{
     color: white;
+    text-align: center;
 }
-.page-header{
+#bootstrap-overrides #subtitle{
     color: white;
+    text-align: center;    
 }
 #subtitle{
     color: white;
@@ -47,11 +59,11 @@ img{
     }
 #map{
     border: 2.5px solid black;
-    height:100%;
-    width:  80vw;
+    height:80%;
+    width:  80%;
     position: absolute;
     right: 0px;
-    left: 225px;
+    left: 325px;
 
 }
 
@@ -78,32 +90,35 @@ img{
     width: 84%;
 }
 
-.index-grid{
-position: static;
-
+#index-grid{
+position: absolute;
+float: left;
 }
 
-.left{
+#bootstrap-overrides .left{
 
     max-width: 100%;
     max-height: 100%;
-    position: static;
-
+    position: relative;
+    padding-right: 0px;
+    padding-left: 0px;
 }
 
-.center{
+#bootstrap-overrides .center{
 
     max-width: 100%;
     max-height: 100%;
-    position: static;
-
+    position: relative;
+    padding-right: 0px;
+    padding-left: 0px;
 }
 
-.right{
+#bootstrap-overrides .right{
     max-height: 100%;
     max-width: 100%;
-    position: static;
-
+    position: relative;
+    padding-right: 0px;
+    padding-left: 0px;
 
 }
 
@@ -111,7 +126,7 @@ position: static;
 .image1{
     padding:1px;
     position: static;
-
+    padding: 1px;
 
 
 
@@ -119,19 +134,21 @@ position: static;
 
 .image2{
     position: static;
-
-
+    height: 100%;
+    padding: 1px;
 
 }
 
 .image3{
     padding:1px;
     position: static;
-
+    padding: 1px;
+    height: 75%;
 }
 
 .image4{
-    position: static;
+    position: relative;
+    padding: 1px;
 
 
 
@@ -139,16 +156,16 @@ position: static;
 }
 
 .image5{
-    right: 2.7%;
+    
     padding-left:1px;
-    position: static;
-
+    position: absolute;
+    padding: 1px;
 
 }
 .image6{
-    right:9.8%;
-    position: static;
-
+    width: 100%;
+    position: absolute;
+    padding: 1px;
 }
 /* Index irregular grid */
 
