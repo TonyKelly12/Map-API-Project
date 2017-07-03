@@ -179,3 +179,8 @@ float: left;
     text-align:left;
     width: 340px;
 }
+
+#pano{
+    height: 200px;
+    width: 200px;
+}

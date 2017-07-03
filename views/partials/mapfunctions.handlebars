@@ -10,15 +10,18 @@
 
 <!-- google maps api-->
 <script type="text/javascript">
+    
+    //global Varaibles
     var map;
     var favmarkers = [];
     var markers =[];
     var searchmarkers = [];
     var polygon = null;
-    var largeInfowindow;
+    var infowindow;
     var service;
     var louisville = {lat: 38.252259, lng: -85.756534};
 
+ //this function initiates the map
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: 38.252259, lng: -85.756534},
@@ -34,7 +37,7 @@
         ];
 
 //making info window for marker
-        largeInfowindow = new google.maps.InfoWindow();
+       infowindow = new google.maps.InfoWindow();
         service = new google.maps.places.PlacesService(map);
 
         //init Drawing Manager
@@ -68,7 +71,7 @@
 
             //Create an onclick event to open an info window at each marker
             marker.addListener('click', function () {
-                populateInfoWindow(this, largeInfowindow);
+                populateInfoWindow(this, infowindow);
             });
         }
 
@@ -302,12 +305,12 @@
                                 '<div><input type=\"button\" value=\"View Route\" onclick =' +
                                 '\"displayDirections(&quot;' + destinations[i] + '&quot;);\"></input></div>'
                             });
-                            largeInfowindow.open(map, searchmarkers[i]);
+                            infowindow.open(map, searchmarkers[i]);
                             /* put this in so that this small window closes if the user clicks the marker,
                              * when the big infowindow opens */
-                            searchmarkers[i].largeInfowindow = largeInfowindow;
+                            searchmarkers[i].infowindow = infowindow;
                             google.maps.event.addListener(searchmarkers[i], 'click', function () {
-                                this.largeInfowindow.close();
+                                this.infowindow.close();
                             });
                         }
                     }
@@ -352,7 +355,7 @@
           * conducted within the maps init location*/
         function placeSearch() {
             var placeQuery = document.getElementById('place-search-text').value;
-            largeInfowindow = new google.maps.InfoWindow();
+           infowindow = new google.maps.InfoWindow();
             service = new google.maps.places.PlacesService(map);
                 if (zoomplace != null){
                     service.nearbySearch({
@@ -386,13 +389,12 @@
 
             searchMarker = new google.maps.Marker({
                 map: map,
-                position: place.geometry.location
-
+                position: place.geometry.location,
+                title: place.name
             });
-            console.log(searchMarker.position);
+            
             google.maps.event.addListener(searchMarker, 'click', function() {
-                largeInfowindow.setContent(place.name);
-                largeInfowindow.open(map, this);
+               populateInfoWindow(this, infowindow);
             });
             searchmarkers.push(searchMarker);
         }
