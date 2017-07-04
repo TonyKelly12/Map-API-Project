@@ -104,8 +104,10 @@
         document.getElementById('submit-location').addEventListener('click', function () {
             setUserLocation();
         });
-        
-      
+
+        placesSearchBox.addListener('places_changed', function () {
+            searchBoxPlaces(this);
+        });
 
 
         var timeAutocomplete = new google.maps.places.Autocomplete(
@@ -119,7 +121,7 @@
 
         var placesSearchBox = new google.maps.places.SearchBox(
             document.getElementById('place-search-text'));
-        
+
 
         placesSearchBox.setBounds(map.getBounds());
         zoomAutocomplete.bindTo('bounds', map);
@@ -162,6 +164,52 @@
             infowindow.addListener('closeclick', function () {
                 infowindow.marker(null);
             });
+
+            function getPlacesDetails(marker, infowindow) {
+
+                var service = new google.maps.places.PlacesService(map);
+                service.getDetails({
+                    placeId: marker.id
+                }, function (place, status) {
+                    if (status === google.maps.places.PlacesServiceStatus.OK) {
+                        // Set the marker property on this infowindow so it isn't created again.
+                        infowindow.marker = marker;
+                        var innerHTML = '<div>';
+                        if (place.name) {
+                            innerHTML += '<strong>' + place.name + '</strong>';
+                        }
+                        if (place.formatted_address) {
+                            innerHTML += '<br>' + place.formatted_address;
+                        }
+                        if (place.formatted_phone_number) {
+                            innerHTML += place.formatted_phone_number;
+                        }
+                        if (place.opening_hours) {
+                            innerHTML += '<br><br><strong>Hours:</strong><br>' +
+                                place.opening_hours.weekday_text[0] + '<br>' +
+                                place.opening_hours.weekday_text[1] + '<br>' +
+                                place.opening_hours.weekday_text[2] + '<br>' +
+                                place.opening_hours.weekday_text[3] + '<br>' +
+                                place.opening_hours.weekday_text[4] + '<br>' +
+                                place.opening_hours.weekday_text[5] + '<br>' +
+                                place.opening_hours.weekday_text[6];
+                        }
+                        if (place.photos) {
+                            innerHTML += '<br><br><img src="' + place.photos[0].getUrl(
+                                { maxHeight: 500, maxWidth: 600 }) + '">';
+                        }
+                        innerHTML += '<div>';
+                        infoWindow.setContent(innerHTML);
+                        infoWindow.open(map.marker);
+                        //MAke suWe the marker property is cleared if the infowindow is closed.
+                        infoWindow.addListener('closeclick', function () {
+                            infoWindow.marker = null;
+                        });
+
+                    }
+                })
+            }
+
             var streetViewService = new google.maps.StreetViewService();
             var radius = 50;
 
@@ -175,9 +223,13 @@
                         nearStreetViewLocation, marker.position);
                     infowindow.setContent('<div>' + marker.title + '</div><div id="pano"></div>' +
                         '<div><input type=\"button\" value=\"Save Location\" onclick = \"saveLocation()\" </input></div>' +
-                        '<div><input type=\"button\" value=\"View Route\" id = \"view-route\" </input></div>');
+                        '<div><input type=\"button\" value=\"View Route\" id = \"view-route\" </input></div>' +
+                        '<div><input type=\"button\" value=\"View Details\" id = \"view-details\" </input></div>');
                     document.getElementById('view-route').addEventListener('click', function () {
                         markerDisplayDirections();
+                    });
+                    document.getElementById('view-details').addEventListener('click', function () {
+                        getPlacesDetails(this, infowindow);
                     });
                     var panoramaOptions = {
                         position: nearStreetViewLocation,
@@ -196,35 +248,7 @@
             /*  USe StreetVIew service to get the closest streetvie image within 50 meters of markers position  */
             streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
             infowindow.open(map, marker);
-            function markerDisplayDirections(origin) {
-                hideListings();
-                var directionsService = new google.maps.DirectionsService;
-                /* get the destination address from the user entered value. */
-                var destinationAddress =
-                    marker.position;
-                //Get mode again from the user entered Value.
-                var mode = "DRIVING"
-                directionsService.route({
-                    //The origin is the passed in markers position.
-                    origin: origin,
-                    //The destination is user entered address
-                    destination: destinationAddress,
-                    travelMode: google.maps.TravelMode[mode]
-                }, function (response, status) {
-                    if (status === google.maps.DirectionsSstatus.OK) {
-                        var directionsDisplay = new google.maps.DirectionsRenderer({
-                            map: map,
-                            directions: response,
-                            draggable: true,
-                            polylineOptions: {
-                                strokeColor: 'green'
-                            }
-                        });
-                    } else {
-                        window.alert('Directions request failed due to ' + status);
-                    }
-                });
-            }
+
 
         }
 
@@ -462,8 +486,8 @@
     function createMarker(place) {
         var icon = {
             url: place.icon,
-            size: new google.maps.Size(35,35),
-            origin: new google.maps.Point(0,0),
+            size: new google.maps.Size(35, 35),
+            origin: new google.maps.Point(0, 0),
             anchor: new google.maps.Point(15, 34),
             sscaledSize: new google.maps.Size(25, 25)
         };
@@ -474,12 +498,12 @@
             title: place.name,
             id: place.id
         });
-        console.log(searchMarker.position);
+
         google.maps.event.addListener(searchMarker, 'click', function () {
             populateInfoWindow(this, infowindow);
         });
         searchmarkers.push(searchMarker);
-       
+
     }
 
     //This function hides all markers from place search only and refocuses map to init position
@@ -491,16 +515,14 @@
         }
     }
 
-    function searchBoxPlaces(searchBox){
+    function searchBoxPlaces(searchBox) {
         hideMarkers(placeMarkers);
-        var places =searchBox.getPlaces();
+        var places = searchBox.getPlaces();
         //For each place get the icon, name and location.
         createMarkersForPlaces(places);
-        if (places.length == 0){
+        if (places.length == 0) {
             window.alert('We did not find any places matching that search');
         }
     }
-
-  
 
 </script>
