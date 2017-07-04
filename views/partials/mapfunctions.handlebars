@@ -105,9 +105,7 @@
             setUserLocation();
         });
         
-        placesSearchBox.addListener('places_changed', function(){
-            searchBoxPlaces(this);
-        });
+      
 
 
         var timeAutocomplete = new google.maps.places.Autocomplete(
@@ -481,13 +479,7 @@
             populateInfoWindow(this, infowindow);
         });
         searchmarkers.push(searchMarker);
-        if (place.geometry.viewport){
-            //Only geocodes have viewport
-            bounds.union(place.geometry.viewport);
-        } else {
-            bounds.extend(place.geometry.location);
-        }
-        map.fitBounds(bounds);
+       
     }
 
     //This function hides all markers from place search only and refocuses map to init position
