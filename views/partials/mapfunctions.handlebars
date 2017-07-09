@@ -4,8 +4,6 @@
     window.jQuery || document.write('<script src="/js/vendor/jquery-1.12.0.min.js"><\/script>')
 
 </script>
-
-
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASBPr5sRT2E6DcIpLZmtNwFm0S4A0RCkk&libraries=places,drawing,geometry&callback=initMap"
     async defer>
 
@@ -457,12 +455,6 @@
         });
     }
 
-
-
-
-
-
-
     /*this function takes users input for type  of place and displays all within 5000 radius. If the user
      * has already zoomed in to a area the search will be conducted within that area if not search will be
       * conducted within the maps init location*/
@@ -484,7 +476,6 @@
 
 
     }
-
 
     // THis Function creates a marker for each result that comes back in placeSearch() and places on map
 
@@ -527,8 +518,6 @@
         }
         map.fitBounds(bounds);
     }
-
-
 
     //This function hides all markers from place search only and refocuses map to init position
     function hideSearchMarker() {
