@@ -1,0 +1,9 @@
+Map Function:
+    ☐ Remove infowindow when route button is clicked
+    ☐ Remove route when clear button is clicked
+    ☐ Give option to search distance from search bar or current location
+    ☐ Save current location to mongo db
+    ☐ Save searched location to mongo db
+    
+
+    

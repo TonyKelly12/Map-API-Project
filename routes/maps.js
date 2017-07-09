@@ -6,7 +6,9 @@ var router = express.Router();
 var request = require ('request');
 var http = require('http');
 
-
+router.get('/', function (req,res) {
+    res.status(200).send('hello it works!');
+});
 // Get Homepage
 router.get('/home', ensureAuthenticated, function(req, res){
     res.render('maps');

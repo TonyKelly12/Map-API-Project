@@ -165,9 +165,9 @@
         });
     }
 
-    
+
     function setUserLocation() {
-      var meIcon = makeMarkerIcon('0091ff');  
+        var meIcon = makeMarkerIcon('0091ff');
         userLocation = document.getElementById('currentLocation').value
         var userLabel = "Me";
         console.log(userLocation);
@@ -181,7 +181,7 @@
                     draggable: true,
                     animation: google.maps.Animation.DROP,
                     label: userLabel,
-                    
+
                     icon: meIcon,
 
                 });
@@ -273,7 +273,7 @@
     function hideListings() {
         for (var i = 0; i < favmarkers.length; i++) {
             favmarkers[i].setMap(null);
-            
+
         }
         zoomHome();
     }
@@ -281,9 +281,9 @@
     function hideSearchListings() {
         for (var i = 0; i < searchmarkers.length; i++) {
             searchmarkers[i].setMap(null);
-            
+
         }
-       zoomHome(); 
+        zoomHome();
     }
 
     function hideLocation() {
@@ -411,7 +411,10 @@
                         var smallInfowindow = new google.maps.InfoWindow({
                             content: durationText + ' away, ' + distanceText +
                             '<div><input type=\"button\" value=\"View Route\" onclick =' +
-                            '\"displayDirections(&quot;' + origins[i] + '&quot;);\"></input></div>'
+                            '\"displayDirections(&quot;' + origins[i] + '&quot;);\"></input></div>'/* +
+                            Add button to save location here!!!!!!!!!!!!! */
+                            /* '<div><input type=\"button\" value=\"Save Location\" onclick =' +
+                             '\"saveLocation(&quot;' + origins[i] + '&quot;);\"></input></div>'*/
                         });
                         smallInfowindow.open(map, searchmarkers[i]);
                         /* put this in so that this small window closes if the user clicks the marker,
@@ -430,7 +433,7 @@
         hideListings();
         var directionsService = new google.maps.DirectionsService;
         // Get the destination address from the user entered value.
-        var destinationAddress =userMarker.position;
+        var destinationAddress = userMarker.position;
         // Get mode again from the user entered value.
         var mode = document.getElementById('mode').value;
         directionsService.route({
@@ -455,19 +458,19 @@
         });
     }
 
-    /*this function takes users input for type  of place and displays all within 5000 radius. If the user
+    /*this function takes users input for type  of place and displays all within 25 radius. If the user
      * has already zoomed in to a area the search will be conducted within that area if not search will be
       * conducted within the maps init location*/
     function placeSearch() {
-        
+
         hideSearchListings(searchmarkers);
         var placesService = new google.maps.places.PlacesService(map);
         var bounds = map.getBounds();
         placesService.textSearch({
             query: document.getElementById('place-search-text').value,
-            location:userMarker.position,
+            location: userMarker.position,
             radius: 25,
-            
+
         }, function (results, status) {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
                 createMarkersForPlaces(results);
@@ -572,7 +575,7 @@
                     innerHTML += '<br><br><div><img src="' + place.photos[0].getUrl(
                         { maxHeight: 100, maxWidth: 200 }) + '"></div>';
                 }
-                innerHTML += '<div>';
+                innerHTML += '<div><div><input type=\"button\" value=\"Save Location\" id=\"save-location\" </input></div>';
                 infowindow.setContent(innerHTML);
                 infowindow.open(map, searchMarker);
                 // Make sure the marker property is cleared if the infowindow is closed.
@@ -581,7 +584,20 @@
                 });
 
             }
+            $(function () {
+                $('#save-location').on('click', function () {
+                    $.ajax({
+                        url: '/maps',
+                        contentType: 'application/json',
+                        success: function (response) {
+                            console.log(response)
+                        }
+                    });
+                });
+            });
         });
+
+
     }
 
 </script>
