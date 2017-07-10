@@ -508,7 +508,7 @@
                 if (placeInfoWindow.searchMarker == this) {
                     console.log("This infowindow already is on this marker!");
                 } else {
-                    getPlacesDetails(this, placeInfoWindow);
+                    getPlacesDetails(this, placeInfoWindow, this);
                 }
             });
             searchmarkers.push(searchMarker);
@@ -543,9 +543,11 @@
     }
 
     function getPlacesDetails(searchMarker, infoWindow) {
-        console.log('this function runs');
+
         var service = new google.maps.places.PlacesService(map);
+
         service.getDetails({
+
             placeId: searchMarker.id
         }, function (place, status) {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -576,26 +578,51 @@
                         { maxHeight: 100, maxWidth: 200 }) + '"></div>';
                 }
                 innerHTML += '<div><div><input type=\"button\" value=\"Save Location\" id=\"save-location\" </input></div>';
+
                 infowindow.setContent(innerHTML);
+
                 infowindow.open(map, searchMarker);
+
+                $(function () {
+                    console.log(searchMarker.id + 'data is being transfered');
+                    $('#save-location').on('click', function (event) {
+                        event.preventDefault();
+
+                        var favPlaceName = searchMarker.title;
+                        var favPlacePosition = searchMarker.position;
+                        var favPlaceId =searchMarker.id;
+                        console.log(favPlaceId + 'marker prop switched to var');
+                        $.ajax({
+                            url: './',
+                            method: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({favPlaceName}),
+                            success: function (response) {
+                                console.log(status)
+                            }
+                        });
+                    });
+                });
+
+                /*console.log(searchMarker.id);
+                document.getElementById('save-location').addEventListener('click', function () {
+                    console.log(searchMarker.id);
+                    saveLocation(searchMarker);
+                }); */
                 // Make sure the marker property is cleared if the infowindow is closed.
                 infowindow.addListener('closeclick', function () {
                     infowindow.searchMarker = null;
+
                 });
 
             }
-            $(function () {
-                $('#save-location').on('click', function () {
-                    $.ajax({
-                        url: '/maps',
-                        contentType: 'application/json',
-                        success: function (response) {
-                            console.log(response)
-                        }
-                    });
-                });
-            });
+
         });
+
+
+    }
+
+    function saveLocation(searchMarker) {
 
 
     }

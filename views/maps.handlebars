@@ -1,4 +1,3 @@
-
 <head>
 
     <title>Maps</title>
@@ -7,8 +6,8 @@
 
 
 <body>
-<h1 class="page-header">Maps</h1>
-<p id="subtitle">Welcome to your map</p>
+    <h1 class="page-header">Maps</h1>
+    <p id="subtitle">Welcome to your map</p>
     <div class="container-fluid">
         <div class="row">
             <div class="options-box col-md-2">
@@ -60,11 +59,12 @@
                     <input type="text" id="search-within-time-text" placeholder="Ex: Google office or 75 9th St">
                     <input type="button" id="search-within-time" value="Go">
                 </div>
-            
+
             </div>
-            <div  id="map"></div>
+            {{#if errors}} {{#each errors}}
+            <div class="alert alert-danger">{{msg}}</div>
+            {{/each}} {{/if}}
+            <div id="map"></div>
         </div>
     </div>
 </body>
-
-

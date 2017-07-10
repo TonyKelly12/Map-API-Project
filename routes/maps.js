@@ -3,28 +3,73 @@
  */
 var express = require('express');
 var router = express.Router();
-var request = require ('request');
+var request = require('request');
 var http = require('http');
+var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var User = require('../models/user');
+var Location = require('../models/savedLocation');
+var mongo = require('mongodb');
+mongoose.connect('mongodb://localhost/savedLocations');
+var db = mongoose.connect;
 
-router.get('/', function (req,res) {
-    res.status(200).send('hello it works!');
-});
+router.use(bodyParser.json());
+
 // Get Homepage
-router.get('/home', ensureAuthenticated, function(req, res){
+router.get('/home', ensureAuthenticated, function (req, res) {
     res.render('maps');
 });
 
+router.get('/', function (req, res) {
+    res
+        .status(200)
+        .send('hello it works!');
+});
 
-function ensureAuthenticated(req, res, next){
-    if(req.isAuthenticated()){
+router.post('/', function (req, res, next) {
+    // uses body-parser to get the data from the ajax call data field
+    console.log('Post function is running');
+    var favPlaceName = req.body.favPlaceName;
+    var favPlacePosition = req.body.favPlacePosition;
+    var favPlaceId = req.body.favPlaceId;
+    console.log(favPlaceName);
+    req
+        .checkBody('favPlaceName', 'no name found')
+        .notEmpty();
+    req
+        .checkBody('favPlacePosition', 'no position found')
+        .notEmpty();
+    req
+        .checkBody('favPlaceId', 'no id found')
+        .notEmpty();
 
+    var errors = req.validationErrors();
+
+    if (errors) {
+        res.render('maps', {errors: errors});
+    } else {
+        var favLocation = new Location({title: favPlaceName, position: favPlacePosition, markerID: favPlaceId, userID: User._id});
+        console.log(favLocation);
+        Location.createLocation(favLocation, function (err, favLocation) {
+            if (err) 
+                throw err;
+           
+        });
+        res.send(' fav place is working' + favPlaceName);
+        // function used to push the data to the users data base
+
+    }
+});
+
+function ensureAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
 
         return next();
     } else {
         //req.flash('error_msg','You are not logged in');
         res.redirect('/users/login');
     }
-}
+};
 /*var options = {
     host: 'maps.googleapis.com',
     port: 80,
@@ -67,7 +112,5 @@ function initMap(req, res, next) {
         inforwindow.open(map,marker);
 
     });*/
-
-
 
 module.exports = router;
