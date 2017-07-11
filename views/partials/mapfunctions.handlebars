@@ -590,13 +590,15 @@
 
                         var favPlaceName = searchMarker.title;
                         var favPlacePosition = searchMarker.position;
-                        var favPlaceId =searchMarker.id;
-                        console.log(favPlaceId + 'marker prop switched to var');
+                        var favPlaceId = searchMarker.id;
+                        var lat = favPlacePosition.toString().replace(/^\"\(([0-9-.]*),.*/g, "$1");
+                        var lng = favPlacePosition.toString().replace(/.*,\s*([0-9-.]*)\)\"$/g, "$1");
+                        console.log(lat + lng + 'marker prop switched to var');
                         $.ajax({
                             url: './',
                             method: 'POST',
                             contentType: 'application/json',
-                            data: JSON.stringify({favPlaceName}),
+                            data: JSON.stringify({ favPlaceName, lat, lng, favPlaceId }),
                             success: function (response) {
                                 console.log(status)
                             }
