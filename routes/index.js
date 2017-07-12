@@ -46,8 +46,8 @@ var userId = req.user.id;
                 title: fav.title,
                 lat: fav.lat,
                 lng: fav.lng,
-                markerID:fav.markerId,
-                userID:fav.userid,
+                markerID:fav.markerID,
+                userID:fav.userID,
             }
             favLocation.push(locationData);
             console.log(locationData.title);

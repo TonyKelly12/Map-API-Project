@@ -8,28 +8,72 @@
     async defer>
 
     </script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js'></script>
 
 <!-- google maps api-->
 <script type="text/javascript">
+    var favList = [];
+    favTile = favList[0];
 
     $(function () {
         $('#get-favList').on('click', function (event) {
             event.preventDefault();
-            var favList = []; 
+
             $.ajax({
                 url: '/index',
                 method: 'GET',
                 contentType: 'application/json',
                 success: function (response) {
-                    response.favLocation.forEach(function(fav){
+                    response.favLocation.forEach(function (fav) {
+                        var lat = fav.lat;
+                        var lng = fav.lng;
+                        var latlng = new google.maps.LatLng(lat, lng);
+                        fav.latlng = latlng;
                         favList.push(fav);
-                    }); 
-                               
-                    console.log(favList[0]);
+                    });
+
+                    console.log(favList[3]);
                 }
 
             });
         });
     });
-</script>
 
+var gridPhotoModel = function(photo) {
+    this.photo = ko.observable(photo)
+}
+$(function () {
+        $('#test').on('click', function (event) {
+            getPlacePhoto(favTile);
+        });
+    });
+
+
+    function getPlacePhoto(favTile, photo) {
+
+        var service = new google.maps.places.PlacesService();
+
+        service.getDetails({
+
+            placeId: favTile.markerID
+        }, function (place, status) {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+                // Set the marker property on this infowindow so it isn't created again.
+
+                if (place.photos) {
+                    var photo = place.photos[0].getUrl(
+                        { maxHeight: 100, maxWidth: 200 });
+                        
+                        ko.applyBindings(new gridPhotoModel(photo));
+                }
+
+
+
+            }
+
+        });
+
+
+    }
+
+</script>
