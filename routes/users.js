@@ -81,10 +81,11 @@ passport.use(new LocalStrategy(
         });
     }));
 
+// Writing user section
 passport.serializeUser(function(user, done) {
     done(null, user.id);
 });
-
+// reading from user session
 passport.deserializeUser(function(id, done) {
     User.getUserById(id, function(err, user) {
         done(err, user);

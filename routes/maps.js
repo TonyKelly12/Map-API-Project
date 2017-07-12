@@ -9,25 +9,38 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var User = require('../models/user');
 var Location = require('../models/savedLocation');
-
+var passport = require('passport');
 
 
 router.use(bodyParser.json());
 
+
+// reading from user session
+passport.deserializeUser(function(id, done) {
+    User.getUserById(id, function(err, user) {
+        done(err, user);
+    });
+});
+
 // Get Homepage
 router.get('/home', ensureAuthenticated, function (req, res) {
+    console.log(req.user);
+    console.log(req.isAuthenticated);
     res.render('maps');
 });
 
+/*
 router.get('/', function (req, res) {
     res
         .status(200)
         .send('hello it works!');
-});
+}); 
+*/
 
 router.post('/', function (req, res, next) {
     // uses body-parser to get the data from the ajax call data field
-    console.log('Post function is running');
+    var userid = req.user.id;
+    console.log(userid);
     
     var favTitle = req.body.favPlaceName;
     var markerId = req.body.favPlaceId;
@@ -39,7 +52,8 @@ router.post('/', function (req, res, next) {
         title: favTitle,
         lat: lat,
         lng: lng,
-        markerID:markerId
+        markerID:markerId,
+        userID:userid,
     });
 
     console.log(favLocation);
@@ -56,7 +70,8 @@ router.post('/', function (req, res, next) {
             console.log(err);
         });
     }
-    res.redirect('/maps/home');
+    req.flash('success_msg', 'Your Location is save');
+    next();
 });
 
 function ensureAuthenticated(req, res, next) {

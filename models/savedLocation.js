@@ -17,6 +17,9 @@ var LocationSchema = mongoose.Schema({
     },
     markerID: {
         type: String,
+    },
+    userID:{
+        type: mongoose.Schema.ObjectId,
     }
     
 });
@@ -34,5 +37,12 @@ module.exports.getLocationByTitle = function (title, callback) {
 
 module.exports.getLocationById = function (markerID, callback) {
     Location.findById(markerId, callback);
+};
+
+module.exports.getListByUser = function(userId, callback){
+    var query ={
+        userID: userId,
+    };
+    Location.find(query,callback);
 };
 

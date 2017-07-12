@@ -1,0 +1,35 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="/js/vendor/jquery-1.12.0.min.js"><\/script>')
+
+</script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASBPr5sRT2E6DcIpLZmtNwFm0S4A0RCkk&libraries=places,geometry&"
+    async defer>
+
+    </script>
+
+<!-- google maps api-->
+<script type="text/javascript">
+
+    $(function () {
+        $('#get-favList').on('click', function (event) {
+            event.preventDefault();
+            var favList = []; 
+            $.ajax({
+                url: '/index',
+                method: 'GET',
+                contentType: 'application/json',
+                success: function (response) {
+                    response.favLocation.forEach(function(fav){
+                        favList.push(fav);
+                    }); 
+                               
+                    console.log(favList[0]);
+                }
+
+            });
+        });
+    });
+</script>
+

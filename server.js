@@ -40,9 +40,9 @@ app.use(express.static(path.join(__dirname,'public')));
 
 //Express Session
 app.use(session({
-    secret: 'secret',
-    saveUninitialized: true,
-    resave: true
+    secret: 'kHX29Q%Pn9AUw&oa',
+    saveUninitialized: false,
+    resave: false
 }));
 
 //Passport Init
