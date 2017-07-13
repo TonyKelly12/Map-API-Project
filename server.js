@@ -19,6 +19,7 @@ var db = mongoose.connect;
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var maps = require('./routes/maps');
+var favlocation = require('./routes/favlocation');
 //Init App
 var app = express();
 
@@ -85,6 +86,7 @@ app.use(function (req, res, next) {
 app.use('/', routes);
 app.use('/users', users);
 app.use('/maps', maps);
+app.use('/favlocation', favlocation);
 
 app.get('/', function (req,res) {
     res.status(200).send('hello it works!');

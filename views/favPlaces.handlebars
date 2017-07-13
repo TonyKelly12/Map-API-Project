@@ -1,0 +1,53 @@
+<head>
+
+    <title>Favorite Places</title>
+    {{>favfunctions}}
+</head>
+
+<h1 class="page-header">Dashboard</h1>
+
+<p id="subtitle">Welcome to your dashboard</p>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="options-box col-md-4">
+            <h1>Your Saved Locations</h1>
+            <hr>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Location Name</th>
+                        <th>Address</th>
+                        <th>Rating</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <!-- Todo: Generate table body -->
+                <tbody data-bind="foreach: favList">
+                    <tr>
+                        <td data-bind="text:location "> </td>
+                        <td>test</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+        {{#if errors}} {{#each errors}}
+        <div class="alert alert-danger">{{msg}}</div>
+        {{/each}} {{/if}}
+
+        <div class="col-md-6">
+            <div class="center">
+
+                <div><img id="fav-photo" data-bind="attr: {src:photo}" alt="messages" /></div>
+                <input type="button" id="load-list" value="Load list">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</div>
