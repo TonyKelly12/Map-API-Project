@@ -13,7 +13,7 @@
 <!-- google maps api-->
 <script type="text/javascript">
     var favList = [];
-    
+
     $(function () {
         event.preventDefault();
 
@@ -58,8 +58,9 @@
                     ko.applyBindings(new gridPhotoModel(photo));
                 }
 
+
                 document.getElementById('load-list').addEventListener('click', function () {
-                    LocationsViewModel(favList);
+                    LocationsViewModel(favList1);
                 });
 
             }
@@ -77,26 +78,53 @@
 
     function favlocation(location) {
         this.title = ko.observable(location.title);
+        this.address = ko.observable(location.address);
+        this.phone = ko.observable(location.phone);
 
     }
 
-var favlocations = ko.observableArray();
+    var favlocations = ko.observableArray();
 
+    var favList1 = favList;
+    function LocationsViewModel(favList) {
 
-    function LocationsViewModel(location) {
-       var favList1 = favList; var self = this;
+        var self = this;
+        var innerHTML = document.getElementById('table');
+        var service = new google.maps.places.PlacesService(innerHTML);
+        var locaddress;
+        var locphone;
+        for (i = 0; i < favList.length; i++) {
+            
+            var loc = favList[i];
+            console.log(loc.markerID);
 
-        for (i = 0; i < favList1.length; i++) {
-            var loc = favList1[i];
+            service.getDetails({
+                placeId: loc.markerID
+            }, function (place, status) {
+                if (status === google.maps.places.PlacesServiceStatus.OK) {
+                    // Set the marker property on this infowindow so it isn't created again.
+                    if (place.formatted_address) {
+                        locaddress = place.formatted_address;
+                    }
+                    if (place.formatted_phone_number) {
+                        locphone = place.formatted_phone_number;
+                    }
 
-            var location = {
-                title: loc.title,
-            }
-            console.log(location.title);
-        favlocations.push(favlocation(location));
+                    var location = {
+                        title: loc.title,
+                        address: locaddress,
+                        phone: locphone
+                    }
+                    console.log(location.address);
+                    favlocations.push(favlocation(location));
+                }
+            });
         };
-      
-      ko.applyBindings(new LocationsViewModel(favlocations));  
-    }
+
+        ko.applyBindings(LocationsViewModel(favlocations));
+
+
+
+    };
 
 </script>
