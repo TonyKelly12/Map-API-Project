@@ -13,8 +13,7 @@
 <!-- google maps api-->
 <script type="text/javascript">
     var favList = [];
-    var favList1 = favList;
-
+    
     $(function () {
         event.preventDefault();
 
@@ -59,9 +58,9 @@
                     ko.applyBindings(new gridPhotoModel(photo));
                 }
 
-document.getElementById('load-list').addEventListener('click', function () {
-            favlocation(favList);
-        });
+                document.getElementById('load-list').addEventListener('click', function () {
+                    LocationsViewModel(favList);
+                });
 
             }
 
@@ -71,47 +70,33 @@ document.getElementById('load-list').addEventListener('click', function () {
     };
 
 
-var gridPhotoModel = function (photo) {
+    var gridPhotoModel = function (photo) {
         console.log(photo);
         this.photo = ko.observable(photo);
     }
 
-    var LocationsViewModel = function(location) {
-        
-       var favlocations = ko.observableArray(favlocations);
-        favlocations.push(this.location);
-    } 
+    function favlocation(location) {
+        this.title = ko.observable(location.title);
 
-    
-    function favlocation(favList, location) {
-     
-        
-        var self = this;
+    }
 
-        for (i = 0; i < favList.length; i++) {
-          var loc = favList[i];
+var favlocations = ko.observableArray();
+
+
+    function LocationsViewModel(location) {
+       var favList1 = favList; var self = this;
+
+        for (i = 0; i < favList1.length; i++) {
+            var loc = favList1[i];
 
             var location = {
-                name: loc.title,
-               
-                
+                title: loc.title,
             }
-            console.log(location.name);
-         
-             
-         
+            console.log(location.title);
+        favlocations.push(favlocation(location));
         };
+      
+      ko.applyBindings(new LocationsViewModel(favlocations));  
+    }
 
-       ko.applyBindings(new LocationsViewModel(location));
-        
-   
-
- }
-    
-
-   
-
-    
-
-    
 </script>
