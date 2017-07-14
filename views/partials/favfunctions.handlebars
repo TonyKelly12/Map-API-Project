@@ -93,6 +93,7 @@
         var service = new google.maps.places.PlacesService(innerHTML);
         var locaddress;
         var locphone;
+        var loctitle;
         for (i = 0; i < favList.length; i++) {
             
             var loc = favList[i];
@@ -103,6 +104,10 @@
             }, function (place, status) {
                 if (status === google.maps.places.PlacesServiceStatus.OK) {
                     // Set the marker property on this infowindow so it isn't created again.
+                    if (place.name) {
+                    loctitle = place.name;
+                }
+                    
                     if (place.formatted_address) {
                         locaddress = place.formatted_address;
                     }
@@ -111,7 +116,7 @@
                     }
 
                     var location = {
-                        title: loc.title,
+                        title: loctitle,
                         address: locaddress,
                         phone: locphone
                     }
