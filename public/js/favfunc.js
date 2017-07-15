@@ -1,16 +1,3 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-<script>
-    window.jQuery || document.write('<script src="/js/vendor/jquery-1.12.0.min.js"><\/script>')
-
-</script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASBPr5sRT2E6DcIpLZmtNwFm0S4A0RCkk&libraries=places,geometry&"
-    async defer>
-
-    </script>
-<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js'></script>
-
-<script type="text/javascript">
     var favList = [];
 
     var favlocations = ko.observableArray();
@@ -117,7 +104,7 @@
                         phone: locphone
                     }
                     console.log(location.address);
-                    favlocations.unshift(favlocation(location));
+                    favlocations.push(favlocation(location));
                 }
             });
         };
@@ -127,5 +114,3 @@
 
 
     };
-
-</script>
