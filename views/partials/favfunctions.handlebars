@@ -14,7 +14,7 @@
     var favList = [];
 
     var favlocations = ko.observableArray();
-    
+
     var gridPhotoModel = function (photo) {
         console.log(photo);
         this.photo = ko.observable(photo);
@@ -24,6 +24,7 @@
         this.title = ko.observable(location.title);
         this.address = ko.observable(location.address);
         this.phone = ko.observable(location.phone);
+        this.favid = ko.observable(location.favid);
 
     }
 
@@ -47,12 +48,14 @@
                 var favTile = favList[0];
                 console.log(favTile);
                 getPlacePhoto(favTile);
-                
+
             }
-        
+
         });
-        
+
     });
+
+
 
     function getPlacePhoto(favTile, photo) {
         console.log(favTile.markerID);
@@ -74,15 +77,16 @@
                 }
 
                 LocationsViewModel(favList);
-               
+
             }
 
         })
 
 
     };
- 
+
     function LocationsViewModel(favList) {
+
 
         var self = this;
         var innerHTML = document.getElementById('table');
@@ -90,8 +94,9 @@
         var locaddress;
         var locphone;
         var loctitle;
+        var id = 0;
         for (i = 0; i < favList.length; i++) {
-            
+
             var loc = favList[i];
             console.log(loc.markerID);
 
@@ -101,25 +106,37 @@
                 if (status === google.maps.places.PlacesServiceStatus.OK) {
                     // Set the marker property on this infowindow so it isn't created again.
                     if (place.name) {
-                    loctitle = place.name;
-                }
-                    
+                        loctitle = place.name;
+                    }
+
                     if (place.formatted_address) {
                         locaddress = place.formatted_address;
                     }
                     if (place.formatted_phone_number) {
                         locphone = place.formatted_phone_number;
                     }
+                    if (place.photos) {
+                        var photo = place.photos[0].getUrl(
+                            { maxHeight: 500, maxWidth: 700 });
+
+
+                    }
 
                     var location = {
                         title: loctitle,
                         address: locaddress,
-                        phone: locphone
+                        phone: locphone,
+                        photo: photo,
+                        favid: id
                     }
-                    console.log(location.address);
+                    id += 1;
+                    console.log(location.favid);
                     favlocations.unshift(favlocation(location));
+
                 }
+
             });
+
         };
 
         ko.applyBindings(LocationsViewModel(favlocations));
@@ -127,5 +144,13 @@
 
 
     };
+
+    function locationClick(favlocations) {
+
+       
+        var test = document.getElementById("number")
+        console.log('click event function is working' + test)
+               
+    }
 
 </script>

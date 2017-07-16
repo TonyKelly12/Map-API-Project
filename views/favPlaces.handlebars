@@ -11,25 +11,32 @@
 <div class="container-fluid">
     <div class="row">
 
-        <div class="options-box col-md-4">
+        <div class="options-box col-md-6">
             <h1>Your Saved Locations</h1>
             <hr>
             <table>
                 <thead>
-                    <tr>
+                    <tr id="headertb">
+                       <th>Order</th>
                         <th>Location Name</th>
                         <th>Address</th>
                         <th>Phone</th>
-                        <th></th>
+                        
                     </tr>
                 </thead>
                 <!-- Todo: Generate table body -->
                 <tbody id="table" data-bind="foreach: favlocations">
-                    <tr>
-                        <td data-bind="text:title "> </td>
+                   
+
+                    <tr id="location" class="loctable" onclick="locationClick()" >
+                        <td id="number" data-bind="text:favid"</td> 
+                        <td id="title" data-bind="text:title "></td>
                         <td id="addressdiv" data-bind="text:address "></td>
                         <td id="phonediv" data-bind="text:phone "></td>
+                             
                     </tr>
+
+                   
                 </tbody>
             </table>
 
@@ -42,8 +49,8 @@
         <div class="col-md-6">
             <div class="center">
 
-                <div><img id="fav-photo" data-bind="attr: {src:photo}" alt="messages" /></div>
-                <input type="button" id="load-list" value="Load list">
+                <div><img class="fav-preview" id="fav-photo" data-bind="attr: {src:photo}" alt="messages" /></div>
+                
             </div>
         </div>
     </div>

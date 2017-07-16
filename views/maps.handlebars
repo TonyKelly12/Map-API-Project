@@ -1,7 +1,7 @@
 <head>
 
     <title>Maps</title>
-  
+
 </head>
 
 
@@ -15,17 +15,39 @@
                 <hr>
                 <div>
                     <h4>Enter Your Current Location</h4>
-                    <input type="text" id="currentLocation" placeholder="Whats the address of your current location">
-                    <input type="button" id="submit-location" value="Submit">
-                    <input type="button" id="clear-location" value="Clear Location">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input type="text" id="currentLocation" placeholder="Whats the address of your current location">
+                        </div>
+                        <div class="col-md-4">
+                            <input type="button" id="submit-location" value="Submit">
+                        </div>
+                        <div class="col-md-4">
+                            <input type="button" id="clear-location" value="Clear Location">
+                        </div>
+                    </div>
                 </div>
                 <hr>
-                <div class="mapButtons">
+                <div class="col-md-12">
+                    <span class="text"> Show all of your save locations</span>
+                </div>
+                <div class="col-md-6">
                     <input type="button" id="show-listings" value="ShowListings">
+                </div>
+                <div class="col-md-6">
                     <input type="button" id="hide-listings" value="HideListings">
+                </div>
+                
 
-                    <span class="text"> Draw a shape to search within it</span>
-                    <input id="toggle-drawing" type="button" value="Drawing Tools">
+                <div class="row">
+                    <div class="col-md-12">
+                        <hr>
+                        <span class="text"> Draw a shape to search within it</span>
+                    </div>
+
+                    <div class="col-md-4">
+                        <input id="toggle-drawing" type="button" value="Drawing Tools">
+                    </div>
                 </div>
                 <hr>
                 <div>
@@ -33,14 +55,16 @@
                     <input type="text" id="zoom-to-area-text" placeholder="Enter your favorite area!">
                     <input type="button" id="zoom-to-area" value="Zoom">
                 </div>
+
                 <hr>
+
                 <div>
                     <h4>Search For Places</h4>
                     <input type="text" id="place-search-text" placeholder="What type of Place are you looking for">
                     <input type="button" id="place-search" value="Search">
-                    <input type="button" id="clear-search" value="Clear Search">
+                    
                 </div>
-                
+
                 <div>
                     <span class="text">Within</span>
                     <select id="max-duration">
@@ -57,13 +81,17 @@
                     </select>
                     <span class="text">of my current location.</span>
                     <input type="button" id="search-within-time" value="Go">
+                    <input type="button" id="clear-search" value="Clear Search">
                 </div>
 
             </div>
-            {{#if errors}} {{#each errors}}
-            <div class="alert alert-danger">{{msg}}</div>
-            {{/each}} {{/if}}
-            <div id="map"></div>
-        </div>
+        
+        {{#if errors}} {{#each errors}}
+        <div class="alert alert-danger">{{msg}}</div>
+        {{/each}} {{/if}}
+        
+        <div id="map"></div>
+       </div> 
     </div>
+    
 </body>

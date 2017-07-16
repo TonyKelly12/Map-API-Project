@@ -13,18 +13,18 @@
     background-size: 100vw 100% ;
     background-repeat: no-repeat;
     background-image: linear-gradient(to right, purple 0%, black 110%), url('w3css.gif');
-   
-    
 }
 
 #bootstrap-overrides h1{
     color: white;
     text-align: center;
 }
+
 #bootstrap-overrides #subtitle{
     color: white;
     text-align: center;    
 }
+
 #subtitle{
     color: white;
 }
@@ -33,38 +33,27 @@ img{
     max-width: 100%;
     max-height: 100%;
 }
-/* Everything but the jumbotron gets side spacing for mobile first views */
-
-
-/* Customize container */
 
 /* Main marketing message and sign up button */
 .jumbotron {
     text-align: center;
     border-bottom: 1px solid #e5e5e5;
 }
+
 .jumbotron .btn {
     padding: 14px 24px;
     font-size: 21px;
 }
 
+/* Map CSS */
 
-/* Responsive: Portrait tablets and up */
-
-    /* Space out the masthead */
-
-    /* Remove the bottom border on the jumbotron for visual effect */
-    .jumbotron {
-        border-bottom: 0;
-    }
 #map{
     border: 2.5px solid black;
-    height:80%;
-    width:  80%;
-    position: absolute;
+    height:84vh;
+    width:  80vw;
+    
     right: 0px;
-    left: 325px;
-
+    left: 5px;
 }
 
 #ddtabs{
@@ -72,7 +61,7 @@ img{
 }
 
 #toggle-drawing{
-    width: 27%;
+    
     position: relative;
     margin-left: 10px;
 }
@@ -88,6 +77,10 @@ img{
 
 #search-within-time-text{
     width: 84%;
+}
+
+#currentLocation{
+    width: 100%;
 }
 
 #index-grid{
@@ -124,38 +117,33 @@ float: left;
 
 
 .image1{
-    padding:1px;
-    position: static;
-    padding: 1px;
-
-
-
+    padding-top:20px;
+    height: 50vh;
 }
 
 .image2{
-    position: static;
-    height: 100%;
-    padding: 1px;
-
+    padding-top:10px;
+    height: 49vh;
+    width: 100%;
+     left: 10px;
+    max-width: 97%;
 }
 
-.image3{
-    padding:1px;
-    position: static;
-    padding: 1px;
-    height: 75%;
+.fav-preview{
+   padding-top:10px;
+    height: 49vh;
+    width: 60vw;
+     left: 10px;
+    max-width: 97%;
 }
 
 
-#fav-photo{
-    position: relative;
-    max-width: 100%;
-    max-height: 100%;
-}
+
+
 /* Index irregular grid */
 
 .options-box{
-    background: darkorange;
+    background: darkslateblue;
     border: 1px solid #999;
     border-radius: 3px;
     height: 100%;
@@ -168,4 +156,16 @@ float: left;
 #pano{
     height: 200px;
     width: 200px;
+}
+tr {
+    background-image:linear-gradient(to right, black 0%, grey 110%), url('w3css.gif');
+    color: white;
+    border: 1px solid grey;
+    font-size: 20px;
+    padding: 2px;
+    margin: 2px;
+}
+
+tr:hover { 
+    background-image:linear-gradient(to right, black 0%, purple 110%), url('w3css.gif'); 
 }

@@ -11,12 +11,11 @@
                     </a>
 
                     <ul class= "dropdown-menu" >
+                         <li role="presentation"><a href="/">Dashboard</a></li>
                         <li id="ddtabs"><a href="/maps/home">Map</a></li>
-                        <li>Favorite Places</li>
-                        <li>Events</li>
-                        <li>Forum</li>
-                        <li>Settings</li>
-                        <li>Logout</li>
+                        <li id="ddtabs"><a href="/favlocation">Favorite Places</a></li>
+                     
+                        
                     </ul>
 
                 </li>
@@ -25,7 +24,7 @@
 
             <ul class="nav nav-pills pull-right">
                 {{#if user}}
-                    <li role="presentation"><a href="/">Dashboard</a></li>
+                   
                     <li role="presentation"><a href="/users/logout">Logout</a></li>
                 {{else}}
                     <li role="presentation"><a href="/users/login">Login</a></li>
