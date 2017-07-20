@@ -1,37 +1,34 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-<script>
-    window.jQuery || document.write('<script src="/js/vendor/jquery-1.12.0.min.js"><\/script>')
-
-</script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASBPr5sRT2E6DcIpLZmtNwFm0S4A0RCkk&libraries=places,geometry&"
-    async defer>
-
-    </script>
-<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js'></script>
-
 <script type="text/javascript">
-    var favList = [];
-
-    var favlocations = ko.observableArray();
-
     var gridPhotoModel = function (photo) {
         console.log(photo);
         this.photo = ko.observable(photo);
     }
 
-    function favlocation(location) {
-        this.title = ko.observable(location.title);
-        this.address = ko.observable(location.address);
-        this.phone = ko.observable(location.phone);
-        this.favid = ko.observable(location.favid);
+   var FavLocation = {
+        title: ko.observable(),
+        address: ko.observable(),
+        phone: ko.observable(),
+        favid: ko.observable(),
+        photo: ko.observable(),
+        savedLocations: ko.observableArray(),
+        addLocation: function(){
+            this.savedLocations.push(this.location());
+        }
+    };
 
-    }
+    /*var LocationsViewModel = function (favlist2) {
+        console.log(favlist2);
+        
 
+        function locationClick(location) {
+            console.log('click event function is working ' + location)
+
+        }
+    };*/
 
     $(function () {
         event.preventDefault();
-
+        var favList = [];
         $.ajax({
             url: '/index',
             method: 'GET',
@@ -45,66 +42,41 @@
                     favList.push(fav);
 
                 });
-                var favTile = favList[0];
-                console.log(favTile);
-                getPlacePhoto(favTile);
-
+                var favTile = favList[1];
+               
+                console.log("test 1:fav list has " + favList.length + " items in it");
+                getPlacesInfo(favList);
             }
 
         });
+       
 
     });
 
 
-
-    function getPlacePhoto(favTile, photo) {
-        console.log(favTile.markerID);
-        var innerHTML = document.getElementById('fav-photo');
-        var service = new google.maps.places.PlacesService(innerHTML);
-
-        service.getDetails({
-
-            placeId: favTile.markerID
-        }, function (place, status) {
-            if (status === google.maps.places.PlacesServiceStatus.OK) {
-                // Set the marker property on this infowindow so it isn't created again.
-                console.log(place);
-                if (place.photos) {
-                    var photo = place.photos[0].getUrl(
-                        { maxHeight: 500, maxWidth: 700 });
-
-                    ko.applyBindings(new gridPhotoModel(photo));
-                }
-
-                LocationsViewModel(favList);
-
-            }
-
-        })
-
-
-    };
-
-    function LocationsViewModel(favList) {
-
-
-        var self = this;
+    function getPlacesInfo(favList, location) {
         var innerHTML = document.getElementById('table');
         var service = new google.maps.places.PlacesService(innerHTML);
         var locaddress;
         var locphone;
         var loctitle;
         var id = 0;
+        console.log("test:2 fav list has " + favList.length + " items in it");
+        console.log(favList);
+
+
         for (i = 0; i < favList.length; i++) {
 
+
             var loc = favList[i];
+            var favTile = favList[0];
             console.log(loc.markerID);
 
             service.getDetails({
                 placeId: loc.markerID
             }, function (place, status) {
                 if (status === google.maps.places.PlacesServiceStatus.OK) {
-                    // Set the marker property on this infowindow so it isn't created again.
+
                     if (place.name) {
                         loctitle = place.name;
                     }
@@ -118,10 +90,7 @@
                     if (place.photos) {
                         var photo = place.photos[0].getUrl(
                             { maxHeight: 500, maxWidth: 700 });
-
-
                     }
-
                     var location = {
                         title: loctitle,
                         address: locaddress,
@@ -130,27 +99,104 @@
                         favid: id
                     }
                     id += 1;
-                    console.log(location.favid);
-                    favlocations.unshift(favlocation(location));
-
-                }
-
+                    FavLocation.title(location.title);
+                    FavLocation.address(location.address);
+                    FavLocation.phone(location.phone);
+                    FavLocation.photo(location.photo);
+                    FavLocation.favid(location.favid);
+                    FavLocation.savedLocations.push(location);
+                };
             });
-
         };
 
-        ko.applyBindings(LocationsViewModel(favlocations));
-
-
-
+ko.applyBindings(FavLocation);
     };
 
-    function locationClick(favlocations) {
 
-       
-        var test = document.getElementById("number")
-        console.log('click event function is working' + test)
-               
-    }
+
+function getPlacePhoto(photo) {
+    ko.applyBindings(new gridPhotoModel(photo));
+};                    
+                    /*function getPlacePhoto(photo) {
+                        console.log(favTile.markerID);
+                        var innerHTML = document.getElementById('fav-photo');
+                        var service = new google.maps.places.PlacesService(innerHTML);
+
+                        service.getDetails({
+
+                            placeId: favTile.markerID
+                        }, function (place, status) {
+                            if (status === google.maps.places.PlacesServiceStatus.OK) {
+                                // Set the marker property on this infowindow so it isn't created again.
+                                console.log(place);
+                                if (place.photos) {
+                                    var photo = place.photos[0].getUrl(
+                                        { maxHeight: 500, maxWidth: 700 });
+
+                                    
+                                }
+
+
+                            }
+
+                        })
+
+
+                    
+
+                    function getFavList(list, favlist2) {
+                        var favlist2 = [];
+                        var innerHTML = document.getElementById('table');
+                        var service = new google.maps.places.PlacesService(innerHTML);
+                        var locaddress;
+                        var locphone;
+                        var loctitle;
+                        var id = 0;
+                        console.log("test:2 fav list has " + list.length + " items in it");
+                        console.log(list);
+
+
+                        for (i = 0; i < list.length; i++) {
+
+
+                            var loc = list[i];
+                            console.log(loc.markerID);
+
+                            service.getDetails({
+                                placeId: loc.markerID
+                            }, function (place, status) {
+                                if (status === google.maps.places.PlacesServiceStatus.OK) {
+                                    // Set the marker property on this infowindow so it isn't created again.
+                                    if (place.name) {
+                                        loctitle = place.name;
+                                    }
+
+                                    if (place.formatted_address) {
+                                        locaddress = place.formatted_address;
+                                    }
+                                    if (place.formatted_phone_number) {
+                                        locphone = place.formatted_phone_number;
+                                    }
+
+                                    var location = {
+                                        title: loctitle,
+                                        address: locaddress,
+                                        phone: locphone,
+                                        favid: id
+                                    }
+                                    id += 1;
+
+                                    favlocation(location);
+                                    console.log("pushed location" + location)
+
+                                }
+
+                            });
+
+                        };
+
+
+
+                    } */
 
 </script>
