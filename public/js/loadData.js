@@ -1,12 +1,13 @@
 var favList = [];
-$(function () {
-    event.preventDefault();
-
+function loadData() {
     $.ajax({
         url: '/index',
         method: 'GET',
         contentType: 'application/json',
+        async: false, // Not recommended
         success: function (response) {
+
+            console.log(response);
             response.favLocation.forEach(function (fav) {
                     var lat = fav.lat;
                     var lng = fav.lng;
@@ -20,10 +21,11 @@ $(function () {
             var favTile = favList[1];
             
             console.log("test 1:fav list has " + favList.length + " items in it");
-            getPlacesInfo(favList);
-           getPlacePhoto(favTile);
+            //getPlacesInfo(favList);
+          // getPlacePhoto(favTile);
         }
 
     });
 
-});
+}
+loadData();
