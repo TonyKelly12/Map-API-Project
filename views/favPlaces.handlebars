@@ -1,8 +1,8 @@
 <head>
 
     <title>Favorite Places</title>
-   
-    {{>favfunctions}}
+
+
 </head>
 
 <h1 class="page-header">Dashboard</h1>
@@ -15,32 +15,33 @@
         <div class="options-box col-md-6">
             <h1>Your Saved Locations</h1>
             <hr>
-            <table>
-                <thead>
-                    <tr id="headertb">
-                       <th>Order</th>
-                        <th>Location Name</th>
-                        <th>Address</th>
-                        <th>Phone</th>
-                        
-                    </tr>
-                </thead>
-                <!-- Todo: Generate table body -->
-                <tbody id="table" data-bind="foreach: savedLocations">
-                   
+           
+                <table >
+                    <thead>
+                        <tr id="headertb">
+                            <th>Order</th>
+                            <th>Location Name</th>
+                            <th>Address</th>
+                            <th>Phone</th>
 
-                    <tr id="location" class="loctable"  >
-                        <td id="number" data-bind="text:favid"</td> 
-                        <td id="title" data-bind="text:title "></td>
-                        <td id="addressdiv" data-bind="text:address "></td>
-                        <td id="phonediv" data-bind="text:phone "></td>
-                             
-                    </tr>
+                        </tr>
+                    </thead>
+                    <!-- Todo: Generate table body -->
+                    <tbody id="table" data-bind="foreach: savedLocations">
 
-                   
-                </tbody>
-            </table>
 
+                        <tr >
+                            <td id="number" data-bind="text:favid" </td>
+                                <td id="title" data-bind="text:title "></td>
+                                <td id="addressdiv" data-bind="text:address "></td>
+                                <td id="phonediv" data-bind="text:phone "></td>
+
+                        </tr>
+
+
+                    </tbody>
+                </table>
+           
 
         </div>
         {{#if errors}} {{#each errors}}
@@ -50,8 +51,8 @@
         <div class="col-md-6">
             <div class="center">
 
-                <div><img class="fav-preview" id="fav-photo" data-bind="attr: {src:photo}" alt="messages" /></div>
-                
+                <div><img class="fav-preview" id="table" data-bind="attr: {src:photo}" alt="messages" /></div>
+
             </div>
         </div>
     </div>

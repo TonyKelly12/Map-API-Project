@@ -169,3 +169,8 @@ tr {
 tr:hover { 
     background-image:linear-gradient(to right, black 0%, purple 110%), url('w3css.gif'); 
 }
+
+#table{
+    max-width: 100%;
+    max-height: 100%;
+}

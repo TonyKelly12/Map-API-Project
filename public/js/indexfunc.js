@@ -1,4 +1,4 @@
-var favList = [];
+/*var favList = [];
 
     $(function () {
         event.preventDefault();
@@ -23,15 +23,16 @@ var favList = [];
 
         });
 
-    });
-    var gridPhotoModel = function (photo) {
-        console.log(photo);
-        this.photo = ko.observable(photo);
+    });*/
+    var gridPhotoModel = function (indexPhoto) {
+        console.log(indexPhoto);
+        this.indexPhoto = ko.observable(indexPhoto);
     }
     
     function getPlacePhoto(favTile, photo) {
         console.log(favTile.markerID);
-        var innerHTML = document.getElementById('fav-photo');
+        var indexPhoto;
+    var innerHTML = document.getElementById('index-photo');
         var service = new google.maps.places.PlacesService(innerHTML);
 
         service.getDetails({
@@ -42,10 +43,10 @@ var favList = [];
                 // Set the marker property on this infowindow so it isn't created again.
                 console.log(place);
                 if (place.photos) {
-                    var photo = place.photos[0].getUrl(
+                    indexPhoto = place.photos[0].getUrl(
                         { maxHeight: 500, maxWidth: 700 });
 
-                    ko.applyBindings(new gridPhotoModel(photo));
+                    ko.applyBindings(new gridPhotoModel(indexPhoto));
                 }
 
 

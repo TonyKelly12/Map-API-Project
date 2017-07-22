@@ -4,54 +4,21 @@
         this.photo = ko.observable(photo);
     }
 
-   var FavLocation = {
-        title: ko.observable(),
-        address: ko.observable(),
-        phone: ko.observable(),
-        favid: ko.observable(),
-        photo: ko.observable(),
-        savedLocations: ko.observableArray(),
-        addLocation: function(){
-            this.savedLocations.push(this.location());
-        }
+    function FavLocation() {
+        var self = this;
+        self.location = ko.observable();
+        self.title = ko.observable();
+        self.address = ko.observable();
+        self.phone = ko.observable();
+        self.favid = ko.observable();
+        self.photo = ko.observable();
+        self.savedLocations = ko.observableArray();
+
     };
 
-    /*var LocationsViewModel = function (favlist2) {
-        console.log(favlist2);
-        
 
-        function locationClick(location) {
-            console.log('click event function is working ' + location)
 
-        }
-    };*/
 
-    $(function () {
-        event.preventDefault();
-        var favList = [];
-        $.ajax({
-            url: '/index',
-            method: 'GET',
-            contentType: 'application/json',
-            success: function (response) {
-                response.favLocation.forEach(function (fav) {
-                    var lat = fav.lat;
-                    var lng = fav.lng;
-                    var latlng = new google.maps.LatLng(lat, lng);
-                    fav.latlng = latlng;
-                    favList.push(fav);
-
-                });
-                var favTile = favList[1];
-               
-                console.log("test 1:fav list has " + favList.length + " items in it");
-                getPlacesInfo(favList);
-            }
-
-        });
-       
-
-    });
 
 
     function getPlacesInfo(favList, location) {
@@ -60,7 +27,7 @@
         var locaddress;
         var locphone;
         var loctitle;
-        var id = 0;
+        var id = 1;
         console.log("test:2 fav list has " + favList.length + " items in it");
         console.log(favList);
 
@@ -99,6 +66,7 @@
                         favid: id
                     }
                     id += 1;
+                    FavLocation.location(location);
                     FavLocation.title(location.title);
                     FavLocation.address(location.address);
                     FavLocation.phone(location.phone);
@@ -109,94 +77,13 @@
             });
         };
 
-ko.applyBindings(FavLocation);
+        ko.applyBindings(FavLocation);
     };
 
 
 
-function getPlacePhoto(photo) {
-    ko.applyBindings(new gridPhotoModel(photo));
-};                    
-                    /*function getPlacePhoto(photo) {
-                        console.log(favTile.markerID);
-                        var innerHTML = document.getElementById('fav-photo');
-                        var service = new google.maps.places.PlacesService(innerHTML);
-
-                        service.getDetails({
-
-                            placeId: favTile.markerID
-                        }, function (place, status) {
-                            if (status === google.maps.places.PlacesServiceStatus.OK) {
-                                // Set the marker property on this infowindow so it isn't created again.
-                                console.log(place);
-                                if (place.photos) {
-                                    var photo = place.photos[0].getUrl(
-                                        { maxHeight: 500, maxWidth: 700 });
-
-                                    
-                                }
-
-
-                            }
-
-                        })
-
-
-                    
-
-                    function getFavList(list, favlist2) {
-                        var favlist2 = [];
-                        var innerHTML = document.getElementById('table');
-                        var service = new google.maps.places.PlacesService(innerHTML);
-                        var locaddress;
-                        var locphone;
-                        var loctitle;
-                        var id = 0;
-                        console.log("test:2 fav list has " + list.length + " items in it");
-                        console.log(list);
-
-
-                        for (i = 0; i < list.length; i++) {
-
-
-                            var loc = list[i];
-                            console.log(loc.markerID);
-
-                            service.getDetails({
-                                placeId: loc.markerID
-                            }, function (place, status) {
-                                if (status === google.maps.places.PlacesServiceStatus.OK) {
-                                    // Set the marker property on this infowindow so it isn't created again.
-                                    if (place.name) {
-                                        loctitle = place.name;
-                                    }
-
-                                    if (place.formatted_address) {
-                                        locaddress = place.formatted_address;
-                                    }
-                                    if (place.formatted_phone_number) {
-                                        locphone = place.formatted_phone_number;
-                                    }
-
-                                    var location = {
-                                        title: loctitle,
-                                        address: locaddress,
-                                        phone: locphone,
-                                        favid: id
-                                    }
-                                    id += 1;
-
-                                    favlocation(location);
-                                    console.log("pushed location" + location)
-
-                                }
-
-                            });
-
-                        };
-
-
-
-                    } */
+    function getPlacePhoto(photo) {
+        ko.applyBindings(new gridPhotoModel(photo));
+    };
 
 </script>
