@@ -17,7 +17,7 @@ function FavListModel() {
         var locphone;
         var loctitle;
         var locaddress;
-        var location;
+       
         var id = 1;
         var innerHTML2 = document.getElementById('table');
 
@@ -34,10 +34,13 @@ function FavListModel() {
 
             service2.getDetails({
                 placeId: loc.markerID
-            }, function (place, status) {
-                if (status === google.maps.places.PlacesServiceStatus.OK) {
-
-                    if (place.name) {
+            }, function (place, status, savedLocations) {
+                if (status != google.maps.places.PlacesServiceStatus.OK) {
+                       console.log("no information was passed");
+                   
+                } else {
+                  var location;
+                     if (place.name) {
                         loctitle = place.name;
                     }
 
@@ -63,14 +66,13 @@ function FavListModel() {
                    self.savedLocations().push(location);
                     console.log("after location is pushed " + self.savedLocations().length);
 
-                } else {
-                    console.log("no information was passed");
+
                 };
-                
+              
             });
-            
+        
         };
-console.log(self.savedLocations().length);
+ console.log(self.savedLocations().length);  // SAVED LOCATIONS ARRAY RESET TO EMPTY!!!!!
     }
 
     $(function () {
