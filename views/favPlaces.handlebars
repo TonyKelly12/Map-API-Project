@@ -2,6 +2,7 @@
 
     <title>Favorite Places</title>
 
+{{>favfunctions}}
 
 </head>
 
@@ -27,10 +28,10 @@
                         </tr>
                     </thead>
                     <!-- Todo: Generate table body -->
-                    <tbody id="table" data-bind="foreach: savedLocations">
+                   <tbody id="table"  data-bind="foreach: savedLocations">
 
 
-                        <tr >
+                        <tr>
                             <td id="number" data-bind="text:favid" </td>
                                 <td id="title" data-bind="text:title "></td>
                                 <td id="addressdiv" data-bind="text:address "></td>
@@ -51,7 +52,7 @@
         <div class="col-md-6">
             <div class="center">
 
-                <div><img class="fav-preview" id="table" data-bind="attr: {src:photo}" alt="messages" /></div>
+                <div><img class="fav-preview" data-bind="attr: {src:photo}" alt="messages" /></div>
 
             </div>
         </div>

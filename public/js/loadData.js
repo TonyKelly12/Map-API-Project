@@ -4,7 +4,7 @@ function loadData() {
         url: '/index',
         method: 'GET',
         contentType: 'application/json',
-        async: false, // Not recommended
+       
         success: function (response) {
 
             console.log(response);
