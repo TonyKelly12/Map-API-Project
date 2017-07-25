@@ -8,8 +8,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack-dev-server",
-    "build": "webpack",
+   
     "start": "node server.js",
     "deploy": "gcloud app deploy"
   },
@@ -47,9 +46,7 @@
     "passport-local": "^1.0.0",
     "passport-oauth2": "*",
     "path": "^0.12.7",
-    "request": "^2.81.0",
-    "webpack": "^2.6.0",
-    "webpack-dev-server": "^2.4.5"
+    "request": "^2.81.0"
   },
   "dependencies": {}
 }
