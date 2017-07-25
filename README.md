@@ -28,9 +28,9 @@
 - On first startup you will be promted to create a login user name and password.
 
 - Once account is created you can log in to the site and viste 3 pages
-    -Dashboard
-    -Maps
-    -Favorite Places
+    - Dashboard
+    - Maps
+    - Favorite Places
 
 - On the map page start by marking your current location _(Within Louisville, KY)_ at the top of the maps options bar.
 
