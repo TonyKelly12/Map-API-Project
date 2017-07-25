@@ -1,6 +1,6 @@
 # What's Tonights Move
 
--   "Whats Tonights Move" is a google maps api based project, written in javascript, Knockout JS, NodeJS, MongoDB, and Mongoose and PassportJs. 
+-   "Whats Tonights Move" is a google maps api based project, written in javascript, Knockout JS, NodeJS, MongoDB, Mongoose and PassportJs. 
 
 -	This applications login system is written in NodeJS and validated with PassportJS. Users and user favorite locations saved in a Mongo database.
 
