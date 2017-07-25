@@ -6,10 +6,10 @@
 
 -	This application gives the user the ability to mark their current location, search for locations within a user specified distance of the marked location, and also save & delete thoes locations in their favorite locations list. 
 
-#Installation
+# Installation
 
 - Install NodeJS @ https://nodejs.org/en/
-    -https://www.youtube.com/watch?v=1US-P13yKVs
+    - https://www.youtube.com/watch?v=1US-P13yKVs
 
 - Install MongoDB @ https://www.mongodb.com/download-center#community
     - https://www.youtube.com/watch?v=_RQ4lET5ejw
@@ -24,7 +24,7 @@
 
 -Once both mongo server and mongo databse are running **DO NOT CLOSE EITHER SHELL** open another shell and enter **_npm start_** to start your development server listening on _port 8000_
 
-#Usage
+# Usage
 - On first startup you will be promted to create a login user name and password.
 
 - Once account is created you can log in to the site and viste 3 pages
@@ -42,7 +42,7 @@
 
 - Save Locations in your favorite locations list.
 
-#Known Issues/Bugs
+# Known Issues/Bugs
 
 - _7/24/2017_ Favorite Locations list will not populate due to favorite locations array loosing value once exiting the for loop used to populate google places data for each location in the list.  **_working on a fix_** 
 
