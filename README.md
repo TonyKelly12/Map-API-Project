@@ -22,7 +22,7 @@
 
 - Once MongoDB server is running **DO NOT CLOSE SHELL**. Open another shell and enter **_mongo_** to connect your mongo database to the mongo server.
 
--Once both mongo server and mongo databse are running **DO NOT CLOSE EITHER SHELL** open another shell and enter **_npm start_** to start your development server listening on _port 8000_
+- Once both mongo server and mongo databse are running **DO NOT CLOSE EITHER SHELL** open another shell and enter **_npm start_** to start your development server listening on _port 8000_
 
 # Usage
 - On first startup you will be promted to create a login user name and password.
