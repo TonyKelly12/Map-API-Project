@@ -44,8 +44,7 @@
 
 # Known Issues/Bugs
 
-- _7/24/2017_ Favorite Locations list will not populate due to favorite locations array loosing value once exiting the for loop used to populate google places data for each location in the list.  
-    - (**_working on a fix_**) 
+
 
 - _7/24/2017_ Favorite Locations picture on the Dashboard/index page will not populate due to bug in favorite locations array  
     - (**_working on a fix_**) 
