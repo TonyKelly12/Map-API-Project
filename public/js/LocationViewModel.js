@@ -1,23 +1,12 @@
 
-function FavListModel() {
-    var self = this;
-    self.savedLocations = ko.observableArray();
-    self.title = ko.observable();
-    self.address = ko.observable();
-    self.phone = ko.observable();
-    self.favid = ko.observable();
-    self.photo = ko.observable();
-    
-    console.log("Inside ViewModel");
 
-    function getPlacesInfo() {
+function getPlacesInfo(favList) {
 
         console.log("inside getplacesinfo");
 
         var locphone;
         var loctitle;
         var locaddress;
-       
         var id = 1;
         var innerHTML2 = document.getElementById('table');
 
@@ -34,7 +23,7 @@ function FavListModel() {
 
             service2.getDetails({
                 placeId: loc.markerID
-            }, function (place, status, savedLocations) {
+            }, function (place, status) {
                 if (status != google.maps.places.PlacesServiceStatus.OK) {
                        console.log("no information was passed");
                    
@@ -63,22 +52,33 @@ function FavListModel() {
                         favid: id
                     }
                     id += 1;
-                   self.savedLocations().push(location);
-                    console.log("after location is pushed " + self.savedLocations().length);
-
+                   savedLocations.push(location);
+                    console.log("after location is pushed " + savedLocations.length);
+                   
 
                 };
               
             });
         
         };
- console.log(self.savedLocations().length);  // SAVED LOCATIONS ARRAY RESET TO EMPTY!!!!!
+ console.log("end of for loop " + savedLocations.length);  // SAVED LOCATIONS ARRAY RESET TO EMPTY!!!!!
     }
 
-    $(function () {
-        getPlacesInfo();
 
-    });
+ var savedLocations = ko.observableArray();
+
+ function FavListModel(location) {
+    var self = this;
+   
+    self.title = ko.observable();
+    self.address = ko.observable();
+    self.phone = ko.observable();
+    self.favid = ko.observable();
+    self.photo = ko.observable();
+
+    
+    console.log("Inside ViewModel ther are " + favList.length + " in favList");
+
 
 }
-ko.applyBindings(new FavListModel());
+ ko.applyBindings(new FavListModel());

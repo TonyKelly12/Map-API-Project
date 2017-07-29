@@ -23,6 +23,7 @@ function loadData() {
             console.log("test 1:fav list has " + favList.length + " items in it");
             //getPlacesInfo(favList);
           // getPlacePhoto(favTile);
+          getPlacesInfo(favList);
         }
 
     });
