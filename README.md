@@ -44,8 +44,6 @@
 
 # Known Issues/Bugs
 
-
-
 - _7/24/2017_ Favorite Locations picture on the Dashboard/index page will not populate due to bug in favorite locations array  
     - (**_working on a fix_**) 
 

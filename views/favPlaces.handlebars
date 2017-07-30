@@ -31,12 +31,12 @@
                    <tbody id="table"  data-bind="foreach: savedLocations">
 
 
-                        <tr>
+                        <tr data-bind="click: eachLocationCLicked">
                                 <td id="number" data-bind="text:favid" </td>
                                 <td id="title" data-bind="text:title "></td>
                                 <td id="addressdiv" data-bind="text:address "></td>
                                 <td id="phonediv" data-bind="text:phone "></td>
-
+                                
                         </tr>
 
 
@@ -52,8 +52,11 @@
         <div class="col-md-6">
             <div class="center">
 
-                <div data-bind="foreach: savedLocations">
-                    <img id="photo" class="fav-preview" data-bind="attr: {src:photo}" alt="messages" /></div>
+                <div data-bind="foreach: {data: savedLocations, as: 'location'}, visible: initShowPic() ">
+                    <div >
+                    <img id="photo" class="fav-preview" data-bind="attr: {src:photo}" alt="messages"/>
+                    </div>
+                </div>
 
             </div>
         </div>

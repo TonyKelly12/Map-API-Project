@@ -1,4 +1,26 @@
+ var savedLocations = ko.observableArray();
+ var initShowPic = ko.observable(false);
+ var initPic = function(location){
+     console.log("initPic working " + location.title);
+     if(location.showPic == false){
+         console.log(location.showPic)
+         initShowPic(true);
+        location.showPic = true;
+        console.log(location.showPic);
+     }
+ };
+var eachLocationCLicked = function (location){
+    console.log(location.title + " was clicked")
+   initPic(location);
+};
 
+ /* var FavListVM = {
+    
+    eachLocationCLicked: function(location){
+        console.log(location.title + " was clicked")
+    showPic(true); 
+    }
+}; */
 
 function getPlacesInfo(favList) {
 
@@ -49,36 +71,22 @@ function getPlacesInfo(favList) {
                         address: locaddress,
                         phone: locphone,
                         photo: photo,
-                        favid: id
+                        favid: id,
+                        showPic:false
                     }
                     id += 1;
                    savedLocations.push(location);
                     console.log("after location is pushed " + savedLocations.length);
                    
 
-                };
-              
+                };  
             });
-        
         };
- console.log("end of for loop " + savedLocations.length);  // SAVED LOCATIONS ARRAY RESET TO EMPTY!!!!!
+    
+    
     }
 
 
- var savedLocations = ko.observableArray();
-
- function FavListModel(location) {
-    var self = this;
-   
-    self.title = ko.observable();
-    self.address = ko.observable();
-    self.phone = ko.observable();
-    self.favid = ko.observable();
-    self.photo = ko.observable();
-
-    
-    console.log("Inside ViewModel ther are " + favList.length + " in favList");
 
 
-}
- ko.applyBindings(new FavListModel());
+ ko.applyBindings();
