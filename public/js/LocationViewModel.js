@@ -1,17 +1,23 @@
- var savedLocations = ko.observableArray();
- var initShowPic = ko.observable(false);
+var savedLocations = ko.observableArray();
+  var showPic = ko.observable(false);
  var initPic = function(location){
      console.log("initPic working " + location.title);
      if(location.showPic == false){
          console.log(location.showPic)
-         initShowPic(true);
+        self.showPic(true);
         location.showPic = true;
         console.log(location.showPic);
      }
  };
 var eachLocationCLicked = function (location){
-    console.log(location.title + " was clicked")
+    console.log(location.title + " was clicked " + location.photo)
    initPic(location);
+};
+
+var removeLocation = function (location){
+    console.log(location.title + " remove was clicked " + location.photo);
+    savedLocations.remove(location);
+// WRITE AJAX CALL TO UPDATE SAVEDLOACTIONS LIST IN MONGODB
 };
 
  /* var FavListVM = {
@@ -21,6 +27,29 @@ var eachLocationCLicked = function (location){
     showPic(true); 
     }
 }; */
+
+function FavListVM(){
+    var self = this;
+    self.location = ko.observable(location);
+    self.location.title = ko.observable(location.title);
+    self.location.address = ko.observable(location.address);
+    self.location.phone = ko.observable(location.phone);
+    self.location.photo = ko.observable(location.photo);
+    self.location.favid = ko.observable(location.favid);
+    self.location.showPic = ko.observable(location.showPic);
+    
+    
+    self.initPic = function(location){
+        console.log("initPic working " + self.location.title());
+     if(self.location.showPic() == false){
+         console.log(self.location.showPic())
+         showPic(true);
+        self.location.showPic() = true;
+        console.log(self.location.showPic());
+    };
+
+}    
+}
 
 function getPlacesInfo(favList) {
 
@@ -75,18 +104,14 @@ function getPlacesInfo(favList) {
                         showPic:false
                     }
                     id += 1;
-                   savedLocations.push(location);
+                  savedLocations.push(location);
                     console.log("after location is pushed " + savedLocations.length);
-                   
-
+               
                 };  
             });
         };
     
     
     }
+ ko.applyBindings(new FavListVM(savedLocations.location));   
 
-
-
-
- ko.applyBindings();

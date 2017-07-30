@@ -20,23 +20,23 @@
                 <table >
                     <thead>
                         <tr id="headertb">
-                            <th>Order</th>
-                            <th>Location Name</th>
-                            <th>Address</th>
-                            <th>Phone</th>
+                            <th>Order </th>
+                            <th>Location Name </th>
+                            <th>Address </th>
+                            <th>Phone </th>
 
                         </tr>
                     </thead>
-                    <!-- Todo: Generate table body -->
+                     <!--Todo: Generate table body -->
                    <tbody id="table"  data-bind="foreach: savedLocations">
 
 
-                        <tr data-bind="click: eachLocationCLicked">
-                                <td id="number" data-bind="text:favid" </td>
-                                <td id="title" data-bind="text:title "></td>
-                                <td id="addressdiv" data-bind="text:address "></td>
-                                <td id="phonediv" data-bind="text:phone "></td>
-                                
+                        <tr>
+                                <td id="number" data-bind="text:favid, click: eachLocationCLicked " </td>
+                                <td id="title" data-bind="text:title, click: eachLocationCLicked "></td>
+                                <td id="addressdiv" data-bind="text:address, click: eachLocationCLicked "></td>
+                                <td id="phonediv" data-bind="text:phone, click: eachLocationCLicked "></td>
+                                <td> <button data-bind="click: removeLocation"  value="Remove">Remove</button></td>
                         </tr>
 
 
@@ -51,13 +51,13 @@
 
         <div class="col-md-6">
             <div class="center">
-
-                <div data-bind="foreach: {data: savedLocations, as: 'location'}, visible: initShowPic() ">
-                    <div >
+                <div data-bind="visible: showPic" >
+                <div data-bind="foreach: {data: savedLocations, as: 'location'}">
+                    
                     <img id="photo" class="fav-preview" data-bind="attr: {src:photo}" alt="messages"/>
-                    </div>
+                   
                 </div>
-
+                </div>
             </div>
         </div>
     </div>
