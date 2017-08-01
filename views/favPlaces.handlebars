@@ -28,14 +28,14 @@
                         </tr>
                     </thead>
                      <!--Todo: Generate table body -->
-                   <tbody id="table"  data-bind="foreach: savedLocations">
+                   <tbody id="table"  data-bind="foreach: FavListVM.savedLocations">
 
 
                         <tr>
-                                <td id="number" data-bind="text:favid, click: eachLocationCLicked " </td>
-                                <td id="title" data-bind="text:title, click: eachLocationCLicked "></td>
-                                <td id="addressdiv" data-bind="text:address, click: eachLocationCLicked "></td>
-                                <td id="phonediv" data-bind="text:phone, click: eachLocationCLicked "></td>
+                                <td id="number" data-bind="text:favid, click: FavListVM.initPic " </td>
+                                <td id="title" data-bind="text:title, click: FavListVM.initPic"></td>
+                                <td id="addressdiv" data-bind="text:address, click: FavListVM.initPic "></td>
+                                <td id="phonediv" data-bind="text:phone, click: FavListVM.initPic "></td>
                                 <td> <button data-bind="click: removeLocation"  value="Remove">Remove</button></td>
                         </tr>
 
@@ -51,12 +51,13 @@
 
         <div class="col-md-6">
             <div class="center">
-                <div data-bind="visible: showPic" >
-                <div data-bind="foreach: {data: savedLocations, as: 'location'}">
+                
+                <div data-bind="foreach: FavListVM.savedLocations ">
                     
-                    <img id="photo" class="fav-preview" data-bind="attr: {src:photo}" alt="messages"/>
-                   
-                </div>
+                    <div data-bind="visible: FavListVM.showPic" >
+                    <img id="photo" class="fav-preview" data-bind="if: FavListVM.showPic , attr: {src: FavListVM.photo} " alt="messages"/>
+                    </div>
+               
                 </div>
             </div>
         </div>
