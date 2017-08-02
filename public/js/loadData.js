@@ -18,7 +18,7 @@ function loadData() {
                     favList.unshift(fav);
 
                 });
-            var favTile = favList[1];
+            
             
             console.log("test 1:fav list has " + favList.length + " items in it");
             //getPlacesInfo(favList);

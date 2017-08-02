@@ -2,7 +2,6 @@
 
     <title>Favorite Places</title>
 
-{{>favfunctions}}
 
 </head>
 
@@ -28,7 +27,7 @@
                         </tr>
                     </thead>
                      <!--Todo: Generate table body -->
-                   <tbody id="table"  data-bind="foreach: FavListVM.savedLocations">
+                   <tbody id="table" data-bind="foreach: FavListVM.savedLocations">
 
 
                         <tr>
@@ -54,10 +53,15 @@
                 
                 <div data-bind="foreach: FavListVM.savedLocations ">
                     
-                    <div data-bind="visible: FavListVM.showPic" >
-                    <img id="photo" class="fav-preview" data-bind="if: FavListVM.showPic , attr: {src: FavListVM.photo} " alt="messages"/>
+                    <div >
+                        <div>
+                            <h1 data-bind="text: title"></h1>
+                        </div>
+                        <img id="photo" class="fav-preview" data-bind="attr: {src:photo} " alt="messages"/>
+                        <div id="rating" data-bind="text:rating"></div>
+                       
+                        <div id="reviews" data-bind="text: reviews"></div>
                     </div>
-               
                 </div>
             </div>
         </div>

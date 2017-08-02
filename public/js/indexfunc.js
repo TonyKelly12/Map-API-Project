@@ -23,7 +23,7 @@
 
         });
 
-    });*/
+    });
     var gridPhotoModel = function (indexPhoto) {
         console.log(indexPhoto);
         this.indexPhoto = ko.observable(indexPhoto);
@@ -56,4 +56,12 @@
         });
 
 
+    }*/
+
+
+    var IndexPhotoVM = function(savedLocations) {
+        var self = this;
+       self.indexPhoto = ko.observable(savedLocations.photo); //STill A Google Object
     }
+    console.log("index photo log" + self.indexPhoto);
+    ko.applyBindings(IndexPhotoVM);

@@ -1,8 +1,8 @@
 <head>
 
     <title>DashBoard</title>
-{{>indexfunctions}}
-  
+
+
 </head>
 
 <h1 class="page-header">Dashboard</h1>
@@ -11,26 +11,31 @@
 
 <div class="container-fluid">
     <div class="row">
-        
-            <div class="index-grid" id="bootstrap-overrides">
-                <div class="col-md-6">
-                    <div ><a href="/maps/home"><img  src="/img/png/Google_Maps_logo_wordmark.png" alt="maps"></a></div>
-                    <h1><a href="/maps/home">Click To View Your Map</a></h1> 
-                    <div ><a href="/maps/home"><img class="image1 " src="/img/jpeg/google-maps1.jpg" alt="maps"></a></div>
-                </div>
 
-                <div class="col-md-6">
-                     <div ><a href="/favlocation"><img src="/img/png/placeslogoweb.png" alt="maps"></a></div>
-                     <h1 id="dash-headers"><a href="/favlocation">Click To View Your Saved Locations</a></h1>        
-                    <div  ><a href="/favlocation"><img class="image2 " id="index-photo" data-bind="attr: {src:indexPhoto}" alt="messages"/></a></div>
-                </div>
-
-                
-                
-
-                
+        <div class="index-grid" id="bootstrap-overrides">
+            <div class="col-md-6">
+                <div><a href="/maps/home"><img  src="/img/png/Google_Maps_logo_wordmark.png" alt="maps"></a></div>
+                <h1><a href="/maps/home">Click To View Your Map</a></h1>
+                <div><a href="/maps/home"><img class="image1 " src="/img/jpeg/google-maps1.jpg" alt="maps"></a></div>
             </div>
-        
+
+            <div class="col-md-6">
+                <div><a href="/favlocation"><img src="/img/png/placeslogoweb.png" alt="maps"></a></div>
+                <h1 id="dash-headers"><a href="/favlocation">Click To View Your Saved Locations</a></h1>
+                
+                        <a href="/favlocation"><img class="fav-preview" data-bind="attr: {src:indexPhoto} " alt="messages"/></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+
     </div>
+
+</div>
 
 </div>
