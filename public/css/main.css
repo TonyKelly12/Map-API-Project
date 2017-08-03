@@ -1,40 +1,42 @@
 /* Space out content a bit */
-.navbar{
+
+.navbar {
     width: 100vw;
 }
 
-.expressContent{
+.expressContent {
     height: 100vh;
     width: 100vw;
 }
 
-
 #bootstrap-overrides {
-    background-size: 100vw 100% ;
+    background-size: 100vw 100%;
     background-repeat: no-repeat;
     background-image: linear-gradient(to right, purple 0%, black 110%), url('w3css.gif');
 }
 
-#bootstrap-overrides h1{
+#bootstrap-overrides h1 {
     color: white;
     text-align: center;
 }
 
-#bootstrap-overrides #subtitle{
+#bootstrap-overrides #subtitle {
     color: white;
-    text-align: center;    
+    text-align: center;
 }
 
-#subtitle{
+#subtitle {
     color: white;
 }
 
-img{
+img {
     max-width: 100%;
     max-height: 100%;
 }
 
+
 /* Main marketing message and sign up button */
+
 .jumbotron {
     text-align: center;
     border-bottom: 1px solid #e5e5e5;
@@ -45,51 +47,49 @@ img{
     font-size: 21px;
 }
 
+
 /* Map CSS */
 
-#map{
+#map {
     border: 2.5px solid black;
-    height:84vh;
-    width:  80vw;
-    
+    height: 84vh;
+    width: 80vw;
     right: 0px;
     left: 5px;
 }
 
-#ddtabs{
+#ddtabs {
     color: white;
 }
 
-#toggle-drawing{
-    
+#toggle-drawing {
     position: relative;
     margin-left: 10px;
 }
 
-#zoom-to-area-text{
+#zoom-to-area-text {
     position: relative;
     width: 70%;
 }
 
-#zoom-to-area{
+#zoom-to-area {
     width: 24%;
 }
 
-#search-within-time-text{
+#search-within-time-text {
     width: 84%;
 }
 
-#currentLocation{
+#currentLocation {
     width: 100%;
 }
 
-#index-grid{
-position: absolute;
-float: left;
+#index-grid {
+    position: absolute;
+    float: left;
 }
 
-#bootstrap-overrides .left{
-
+#bootstrap-overrides .left {
     max-width: 100%;
     max-height: 100%;
     position: relative;
@@ -97,8 +97,7 @@ float: left;
     padding-left: 0px;
 }
 
-#bootstrap-overrides .center{
-
+#bootstrap-overrides .center {
     max-width: 100%;
     max-height: 100%;
     position: relative;
@@ -106,59 +105,61 @@ float: left;
     padding-left: 0px;
 }
 
-#bootstrap-overrides .right{
+#bootstrap-overrides .right {
     max-height: 100%;
     max-width: 100%;
     position: relative;
     padding-right: 0px;
     padding-left: 0px;
-
 }
 
-
-.image1{
-    padding-top:20px;
+.image1 {
+    padding-top: 20px;
     height: 50vh;
 }
 
-.image2{
-    padding-top:10px;
+.image2 {
+    padding-top: 10px;
     height: 49vh;
     width: 100%;
-     left: 10px;
+    left: 10px;
     max-width: 97%;
 }
 
-.fav-preview{
-   padding-top:10px;
+.fav-preview {
+    padding-top: 10px;
     height: 49vh;
     width: 60vw;
-     left: 10px;
+    left: 10px;
     max-width: 97%;
 }
-
-
 
 
 /* Index irregular grid */
 
-.options-box{
-    background: darkslateblue;
+.options-box {
+    background-image: linear-gradient(to right,slateblue 0%,black 110%), url('w3css.gif');
     border: 1px solid #999;
     border-radius: 3px;
     height: 100%;
     line-height: 35px;
     padding: 10px 10px 30px 10px;
-    text-align:left;
+    text-align: left;
     width: 340px;
 }
 
-#pano{
+#pano {
     height: 200px;
     width: 200px;
 }
+
+#table {
+    max-width: 100%;
+    max-height: 100%;
+}
+
 tr {
-    background-image:linear-gradient(to right, black 0%, grey 110%), url('w3css.gif');
+    background-image: linear-gradient(to right, black 0%, grey 110%), url('w3css.gif');
     color: white;
     border: 1px solid grey;
     font-size: 20px;
@@ -166,11 +167,31 @@ tr {
     margin: 2px;
 }
 
-tr:hover { 
-    background-image:linear-gradient(to right, black 0%, purple 110%), url('w3css.gif'); 
+tr:hover {
+    background-image: linear-gradient(to right, black 0%, purple 110%), url('w3css.gif');
 }
 
-#table{
-    max-width: 100%;
-    max-height: 100%;
+#removeBTN {
+    color: darkslateblue;
+}
+
+p {
+    color: white;
+}
+
+#reviews {
+    color: white;
+}
+
+#rating {
+    color: white;
+}
+#photo{
+    max-height: 85%;
+    max-width: 85%
+}
+
+#pictureTitle{
+    font-size: 75px;
+    font-family: "Georgia";
 }

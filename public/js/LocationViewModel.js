@@ -66,30 +66,30 @@ var FavListVM = {
     showPic: ko.observable(location.showPic),
     
     
-    initPic: function () {
-        console.log("initPic working " + FavListVM.title);
-        if (FavListVM.showPic = false) {
-            console.log(FavListVM.showPic)
+    initPic: function (self) {
+        
+       if (FavListVM.showPic){
+           FavListVM.showPic(true);
+       }else{
+           console.log(' showPic loging true' + FavListVM.showPic);
+       }
+       
             
-            FavListVM.showPic = true;
-            console.log(FavListVM.showPic);
-            return FavListVM.showPic;
-        } else{
-            console.log("show pic came back true")
-        };
+       
 
     }
 };
 
 
-
 function getPlacesInfo(favList) {
 
     console.log("inside getplacesinfo");
-
+    
+    
     var locphone;
     var loctitle;
     var locaddress;
+    
     var id = 1;
     var table = document.getElementById('table');
 
@@ -112,6 +112,7 @@ function getPlacesInfo(favList) {
 
             } else {
                 var location;
+                
                 if (place.name) {
                     loctitle = place.name;
                 }
@@ -136,11 +137,12 @@ function getPlacesInfo(favList) {
                     
                 }
                 if (place.reviews) {
-                    var reviews = place.reviews;// returns a list
+                   var reviews = place.reviews;// returns a list
                     
                 }
                                 
                 FavListVM.location = {
+                   
                     title: loctitle,
                     address: locaddress,
                     phone: locphone,
@@ -149,7 +151,7 @@ function getPlacesInfo(favList) {
                     types: types,
                     reviews:reviews,
                     favid: id,
-                    showPic: false,
+                    showPic: undefined,
                    
                 }
                 id += 1;
@@ -159,7 +161,8 @@ function getPlacesInfo(favList) {
             };
         });
     };
-    console.log(FavListVM.savedLocations); //STILL A GOOGLE OBJECT 
-IndexPhotoVM(FavListVM.savedLocations[0]);
+    //STILL A GOOGLE OBJECT 
+
 }
+ console.log(FavListVM.savedLocations);
 ko.applyBindings(FavListVM );

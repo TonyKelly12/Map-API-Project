@@ -15,33 +15,33 @@
         <div class="options-box col-md-6">
             <h1>Your Saved Locations</h1>
             <hr>
-           
-                <table >
-                    <thead>
-                        <tr id="headertb">
-                            <th>Order </th>
-                            <th>Location Name </th>
-                            <th>Address </th>
-                            <th>Phone </th>
 
-                        </tr>
-                    </thead>
-                     <!--Todo: Generate table body -->
-                   <tbody id="table" data-bind="foreach: FavListVM.savedLocations">
+            <table>
+                <thead>
+                    <tr id="headertb">
+                        <th>Order </th>
+                        <th>Location Name </th>
+                        <th>Address </th>
+                        <th>Phone </th>
 
-
-                        <tr>
-                                <td id="number" data-bind="text:favid, click: FavListVM.initPic " </td>
-                                <td id="title" data-bind="text:title, click: FavListVM.initPic"></td>
-                                <td id="addressdiv" data-bind="text:address, click: FavListVM.initPic "></td>
-                                <td id="phonediv" data-bind="text:phone, click: FavListVM.initPic "></td>
-                                <td> <button data-bind="click: removeLocation"  value="Remove">Remove</button></td>
-                        </tr>
+                    </tr>
+                </thead>
+                <!--Todo: Generate table body -->
+                <tbody id="table" data-bind="foreach: FavListVM.savedLocations">
 
 
-                    </tbody>
-                </table>
-           
+                    <tr>
+                        <td id="number" data-bind="text:favid, click: FavListVM.initPic " </td>
+                            <td id="title" data-bind="text:title, click: FavListVM.initPic"></td>
+                            <td id="addressdiv" data-bind="text:address, click: FavListVM.initPic "></td>
+                            <td id="phonediv" data-bind="text:phone, click: FavListVM.initPic "></td>
+                            <td> <button id="removeBTN" data-bind="click: removeLocation" value="Remove">Remove</button></td>
+                    </tr>
+
+
+                </tbody>
+            </table>
+
 
         </div>
         {{#if errors}} {{#each errors}}
@@ -50,23 +50,27 @@
 
         <div class="col-md-6">
             <div class="center">
-                
+
                 <div data-bind="foreach: FavListVM.savedLocations ">
-                    
-                    <div >
+
+                    <div data-bind="if: this.FavListVM.showPic ">
                         <div>
-                            <h1 data-bind="text: title"></h1>
+                            <h1 id="pictureTitle" data-bind="text: title"></h1>
                         </div>
-                        <img id="photo" class="fav-preview" data-bind="attr: {src:photo} " alt="messages"/>
-                        <div id="rating" data-bind="text:rating"></div>
-                       
-                        <div id="reviews" data-bind="text: reviews"></div>
+                        <img id="photo" class="fav-preview" data-bind="attr: {src:photo} " alt="messages" />
+                        <p>
+                            <div id="rating" data-bind="text:rating"></div>
+                        </p>
+                        <div data-bind="foreach: reviews ">
+                            <p>
+                                <div id="reviews" data-bind="text: reviews"></div>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-</div>
+    </div>
 
 </div>
