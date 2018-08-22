@@ -27,7 +27,7 @@
 # Usage
 - On first startup you will be promted to create a login user name and password.
 
-- Once account is created you can log in to the site and viste 3 pages
+- Once account is created you can log in to the site and visit 3 pages
     - Dashboard
     - Maps
     - Favorite Places
